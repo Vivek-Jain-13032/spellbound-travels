@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background-color: #0a0a0a;
+    font-family: Lato, sans-serif;
+  }
+}
+
+@layer utilities {
+  /* Applied by the ScrollRevealDirective once a section enters the viewport */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  }
+
+  .reveal.reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*
+  Google Translate widget: its own DOM/CSS is unreliable to re-skin directly
+  — it can render different layouts, swap in a native <select> fallback, or
+  reparent nodes, and fighting its class names broke on every attempt. So
+  instead of trying to restyle Google's markup, #google_translate_element
+  (see navbar.component.html) is made fully invisible (opacity: 0) but still
+  interactive, stretched over our own decorative pill — whatever Google
+  actually renders inside becomes an invisible click/keyboard target on top
+  of a design we fully control. Only the widget's page-level side effects
+  (banner iframe, translated-text highlight box) need hiding here.
+*/
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+
+body {
+  top: 0 !important;
+}
+
+/* Whatever Google injects directly inside the container should fill it, so
+   the entire pill area stays clickable regardless of the exact markup. */
+#google_translate_element > * {
+  width: 100% !important;
+  height: 100% !important;
+  cursor: pointer !important;
+}
+
+.goog-tooltip,
+.goog-tooltip:hover {
+  display: none !important;
+}
+
+.goog-text-highlight {
+  background: none !important;
+  box-shadow: none !important;
+}

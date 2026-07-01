@@ -1,0 +1,90 @@
+<section id="about" appScrollSpy class="bg-sb-black scroll-mt-16 md:scroll-mt-[73px]">
+  <div class="h-px bg-gradient-to-r from-transparent via-sb-gold/60 to-transparent"></div>
+
+  <div class="px-6 py-14 md:px-20 md:py-24">
+    <div class="grid grid-cols-1 md:grid-cols-[0.85fr_1.15fr] gap-10 md:gap-[72px] md:items-center max-w-[1200px] mx-auto">
+
+      <!-- Portrait -->
+      <div appReveal class="relative order-1 md:order-none mb-2 md:mb-0">
+        <div class="absolute -inset-4 md:-inset-[30px] portrait-glow"></div>
+        <div class="hidden md:block absolute top-[22px] left-[22px] -right-[22px] -bottom-[22px] border border-sb-gold/[.55] rounded"></div>
+        <div class="relative h-[300px] md:h-[560px] rounded overflow-hidden border border-[#2a2a2a] md:border-sb-gold/[.35] bg-[#0c0c0c]">
+          <div class="absolute inset-0 portrait-pattern"></div>
+          <img
+            src="assets/images/about-portrait.jpg"
+            alt="Vivek, founder of Spellbound Travels"
+            loading="lazy"
+            class="absolute inset-0 w-full h-full object-cover"
+            [class.opacity-0]="!portraitLoaded()"
+            (load)="portraitLoaded.set(true)"
+            (error)="portraitLoaded.set(false)"
+          />
+          <div class="absolute inset-0 portrait-vignette"></div>
+          @if (!portraitLoaded()) {
+            <div class="absolute inset-0 flex items-center justify-center text-center px-6">
+              <div>
+                <svg lucideUser class="w-12 h-12 md:w-[60px] md:h-[60px] text-sb-gold/[.55] mx-auto"></svg>
+                <p class="font-mono text-[10px] md:text-[11px] text-sb-gold/50 tracking-wide mt-4 leading-relaxed">Vivek, Founder</p>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Text -->
+      <div appReveal class="order-2 md:order-none">
+        <div class="flex items-center gap-3 md:gap-[14px] mb-4 md:mb-[22px]">
+          <span class="w-7 md:w-9 h-px bg-sb-gold"></span>
+          <span class="font-body text-[11px] md:text-xs tracking-[0.3em] md:tracking-[0.34em] uppercase text-sb-gold">Our Story</span>
+        </div>
+        <h2 class="font-heading text-[34px] md:text-[50px] leading-[1.12] md:leading-[1.1] text-white font-medium mb-7 md:mb-[30px]">
+          About Spellbound Travels
+        </h2>
+
+        <p class="font-body text-[15px] md:text-[16.5px] leading-[1.72] md:leading-[1.75] text-[#b6b6b6] font-light mb-[18px] md:mb-5">
+          Spellbound Travels was born from a simple belief — that every journey should be seamless, personal, and memorable.
+        </p>
+        <p class="font-body text-[15px] md:text-[16.5px] leading-[1.72] md:leading-[1.75] text-[#b6b6b6] font-light mb-[18px] md:mb-5">
+          I'm <span class="text-sb-gold">Vivek</span>, and I started Spellbound Travels to offer something big agencies can't — a personal, one-on-one travel experience. No call centers. No waiting queues. Just honest guidance, quick responses, and genuine care for your travel needs.
+        </p>
+        <p class="font-body text-[15px] md:text-[16.5px] leading-[1.72] md:leading-[1.75] text-[#b6b6b6] font-light mb-8 md:mb-10">
+          Whether you're planning a dream vacation, a business trip, or navigating the complexities of a visa application — I'm here to make it stress-free for you.
+        </p>
+
+        <!-- Stats: full-width stacked rows on mobile, 3-col grid on desktop -->
+        <div class="flex flex-col md:grid md:grid-cols-3 gap-3.5 md:gap-[18px] mb-8 md:mb-10">
+          <div class="flex md:block items-center gap-4 bg-[#131313] border border-sb-gold/40 rounded p-[18px] md:p-[26px_20px] md:text-center">
+            <svg lucidePlaneTakeoff class="w-6 h-6 md:w-[30px] md:h-[30px] text-sb-gold md:mx-auto flex-shrink-0"></svg>
+            <div class="md:mt-3">
+              <span class="font-heading text-xl md:text-2xl md:block text-white">500+ </span>
+              <span class="font-body text-[13px] md:text-[12.5px] text-[#9a9a9a]">Destinations</span>
+            </div>
+          </div>
+          <div class="flex md:block items-center gap-4 bg-[#131313] border border-sb-gold/40 rounded p-[18px] md:p-[26px_20px] md:text-center">
+            <svg lucideGlobe class="w-6 h-6 md:w-[30px] md:h-[30px] text-sb-gold md:mx-auto flex-shrink-0"></svg>
+            <div class="md:mt-3">
+              <span class="font-heading text-xl md:text-2xl md:block text-white">Global </span>
+              <span class="font-body text-[13px] md:text-[12.5px] text-[#9a9a9a]">Visa Assistance</span>
+            </div>
+          </div>
+          <div class="flex md:block items-center gap-4 bg-[#131313] border border-sb-gold/40 rounded p-[18px] md:p-[26px_20px] md:text-center">
+            <svg lucideZap class="w-6 h-6 md:w-[30px] md:h-[30px] text-sb-gold md:mx-auto flex-shrink-0"></svg>
+            <div class="md:mt-3">
+              <span class="font-heading text-xl md:text-2xl md:block text-white">24hr </span>
+              <span class="font-body text-[13px] md:text-[12.5px] text-[#9a9a9a]">Response Time</span>
+            </div>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          (click)="planYourJourney()"
+          class="w-full md:w-auto inline-flex items-center justify-center gap-[11px] bg-gradient-to-b from-sb-gold-light to-sb-gold text-sb-black border-none px-9 py-[17px] font-body text-[13px] font-bold tracking-[0.14em] uppercase rounded-sm cursor-pointer transition-all hover:shadow-[0_10px_34px_rgba(201,168,76,0.45)] hover:-translate-y-0.5"
+        >
+          Let's Plan Your Journey <svg lucideArrowRight class="w-4 h-4"></svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</section>

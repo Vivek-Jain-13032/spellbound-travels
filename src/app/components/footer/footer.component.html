@@ -1,0 +1,48 @@
+<footer class="bg-[#060606] border-t border-sb-gold/[.18] px-6 pt-12 pb-8 md:px-[60px] md:pt-16 md:pb-[34px]">
+  <div class="grid grid-cols-1 md:grid-cols-[1.6fr_1fr_1fr_1fr] gap-10 max-w-[1200px] mx-auto mb-10 md:mb-12 text-center md:text-left">
+
+    <div class="flex flex-col items-center md:items-start">
+      <div class="font-heading text-2xl text-white font-semibold">Spellbound</div>
+      <div class="font-body text-[9px] md:text-[10px] text-sb-gold tracking-[0.42em] md:tracking-[0.5em] uppercase mt-1 mb-4 md:mb-5">Travels</div>
+      <p class="font-heading italic text-[15px] md:text-base text-[#b8b8b8] m-0 max-w-[280px] leading-snug">Journeys That Leave You Spellbound</p>
+    </div>
+
+    <div>
+      <div class="font-body text-[11px] tracking-[0.18em] uppercase text-sb-gold mb-4 md:mb-5 font-bold">Quick Links</div>
+      <div class="flex flex-col items-center md:items-start gap-3">
+        @for (link of links; track link.id) {
+          <button type="button" (click)="goTo(link.id)" class="font-body text-sm text-[#b0b0b0] hover:text-sb-gold transition-colors bg-transparent border-none cursor-pointer">
+            {{ link.label }}
+          </button>
+        }
+      </div>
+    </div>
+
+    <div>
+      <div class="font-body text-[11px] tracking-[0.18em] uppercase text-sb-gold mb-4 md:mb-5 font-bold">Contact</div>
+      <div class="flex flex-col items-center md:items-start gap-3">
+        <a [href]="'mailto:' + contact.adminEmail" class="font-body text-sm text-[#b0b0b0] hover:text-sb-gold transition-colors">{{ contact.adminEmail }}</a>
+        <a [href]="contact.phoneHref" class="font-body text-sm text-[#b0b0b0] hover:text-sb-gold transition-colors">{{ contact.phone }}</a>
+      </div>
+    </div>
+
+    <div>
+      <div class="font-body text-[11px] tracking-[0.18em] uppercase text-sb-gold mb-4 md:mb-5 font-bold">Follow</div>
+      <div class="flex justify-center md:justify-start gap-3">
+        @for (social of socials; track social.platform) {
+          <a
+            [href]="social.href"
+            [attr.aria-label]="social.label"
+            class="w-10 h-10 border border-[#2a2a2a] hover:border-sb-gold rounded-full flex items-center justify-center text-sb-gold transition-colors"
+          >
+            <app-social-icon [icon]="social.platform" svgClass="w-[18px] h-[18px]"></app-social-icon>
+          </a>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="border-t border-[#1a1a1a] pt-6 text-center font-body text-[12.5px] text-[#8a8a8a] max-w-[1200px] mx-auto">
+    © 2025 Spellbound Travels. All rights reserved.
+  </div>
+</footer>

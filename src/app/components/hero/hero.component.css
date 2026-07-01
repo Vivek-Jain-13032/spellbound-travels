@@ -1,0 +1,30 @@
+/*
+  Layered like the design mock: a striped placeholder pattern sits behind an
+  optional real photo, topped with a gold glow + darkening gradient so the
+  headline stays legible either way. Drop a real photo at
+  assets/images/hero-bg.jpg to replace the placeholder — no other change
+  needed (see README "Replace placeholder photos").
+*/
+.hero-pattern {
+  background-image: repeating-linear-gradient(135deg, #0e0e0e 0px, #0e0e0e 2px, #080808 2px, #080808 22px);
+}
+
+.hero-photo {
+  background-image: url('/assets/images/hero-bg.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-overlay {
+  background:
+    radial-gradient(120% 90% at 78% 30%, rgba(201, 168, 76, 0.2), transparent 55%),
+    linear-gradient(90deg, rgba(5, 5, 5, 0.96) 32%, rgba(5, 5, 5, 0.55) 100%);
+}
+
+@media (max-width: 767px) {
+  .hero-overlay {
+    background:
+      radial-gradient(90% 60% at 60% 20%, rgba(201, 168, 76, 0.22), transparent 60%),
+      linear-gradient(180deg, rgba(5, 5, 5, 0.55), rgba(5, 5, 5, 0.96));
+  }
+}

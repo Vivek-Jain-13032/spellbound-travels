@@ -1,0 +1,17 @@
+/*
+  Portrait placeholder pattern + gold glow, matching hero's approach. Drop a
+  real photo at assets/images/about-portrait.jpg to replace it — see README
+  "Replace placeholder photos".
+*/
+.portrait-pattern {
+  background-image: repeating-linear-gradient(135deg, #121212 0px, #121212 2px, #0b0b0b 2px, #0b0b0b 22px);
+}
+
+.portrait-vignette {
+  background: linear-gradient(180deg, transparent 40%, rgba(10, 10, 10, 0.7));
+}
+
+.portrait-glow {
+  background: radial-gradient(60% 55% at 50% 45%, rgba(201, 168, 76, 0.28), transparent 70%);
+  filter: blur(10px);
+}

@@ -1,0 +1,21 @@
+<section class="bg-[#121212] px-6 py-16 md:px-[60px] md:py-24">
+  <div appReveal class="text-center mb-9 md:mb-[60px]">
+    <div class="font-body text-[11px] md:text-xs tracking-[0.3em] md:tracking-[0.34em] uppercase text-sb-gold mb-3 md:mb-4">The Spellbound Difference</div>
+    <h2 class="font-heading text-[32px] md:text-[46px] text-white font-medium m-0">Why Choose Us</h2>
+  </div>
+
+  <div appReveal class="grid grid-cols-2 md:grid-cols-4 gap-7 gap-x-5 md:gap-6 max-w-[1160px] mx-auto">
+    @for (item of items; track item.title) {
+      <div class="text-center px-1 md:px-3">
+        @switch (item.icon) {
+          @case ('compass') { <svg lucideCompass class="w-9 h-9 md:w-[42px] md:h-[42px] text-sb-gold mx-auto"></svg> }
+          @case ('globe') { <svg lucideGlobe class="w-9 h-9 md:w-[42px] md:h-[42px] text-sb-gold mx-auto"></svg> }
+          @case ('zap') { <svg lucideZap class="w-9 h-9 md:w-[42px] md:h-[42px] text-sb-gold mx-auto"></svg> }
+          @case ('heart-handshake') { <svg lucideHeartHandshake class="w-9 h-9 md:w-[42px] md:h-[42px] text-sb-gold mx-auto"></svg> }
+        }
+        <h3 class="font-heading text-lg md:text-[21px] text-white font-medium my-4 md:my-[22px] mb-2 md:mb-3">{{ item.title }}</h3>
+        <p class="font-body text-[13px] md:text-sm leading-[1.6] md:leading-[1.65] text-[#9a9a9a] font-light m-0">{{ item.description }}</p>
+      </div>
+    }
+  </div>
+</section>

@@ -1,0 +1,19 @@
+<div class="grid grid-cols-1 md:grid-cols-3 bg-[#0c0c0c] border-t border-b border-sb-gold/[.18]">
+  @for (item of items; track item.title; let last = $last) {
+    <div
+      class="flex items-center justify-center gap-4 md:gap-4 px-6 py-5 md:py-[30px] md:px-5 border-b md:border-b-0 border-[#1a1a1a]"
+      [class.md:border-r]="!last"
+      [class.border-[#1c1c1c]]="!last"
+    >
+      @switch (item.icon) {
+        @case ('plane') { <svg lucidePlaneTakeoff class="w-7 h-7 md:w-[30px] md:h-[30px] text-sb-gold flex-shrink-0"></svg> }
+        @case ('id-card') { <svg lucideIdCard class="w-7 h-7 md:w-[30px] md:h-[30px] text-sb-gold flex-shrink-0"></svg> }
+        @case ('headset') { <svg lucideHeadset class="w-7 h-7 md:w-[30px] md:h-[30px] text-sb-gold flex-shrink-0"></svg> }
+      }
+      <div>
+        <div class="font-heading text-base md:text-[17px] text-white">{{ item.title }}</div>
+        <div class="font-body text-xs text-[#8a8a8a]">{{ item.subtitle }}</div>
+      </div>
+    </div>
+  }
+</div>

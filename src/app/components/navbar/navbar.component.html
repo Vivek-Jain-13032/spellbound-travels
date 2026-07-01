@@ -1,0 +1,89 @@
+<nav
+  class="sticky top-0 z-40 flex items-center justify-between px-6 py-4 md:px-[60px] md:py-[22px] bg-sb-black/[.82] backdrop-blur-md border-b border-sb-gold/[.18] transition-shadow duration-300"
+  [class.shadow-2xl]="scrolled()"
+>
+  <!-- Logo -->
+  <button type="button" (click)="goTo('home')" class="flex flex-col items-start leading-none cursor-pointer" aria-label="Spellbound Travels — go to home">
+    <span class="font-heading text-xl md:text-[26px] text-white font-semibold tracking-[0.01em]">Spellbound</span>
+    <span class="font-body text-[8px] md:text-[10px] text-sb-gold tracking-[0.42em] md:tracking-[0.5em] uppercase mt-1 ml-0.5">Travels</span>
+  </button>
+
+  <!-- Desktop nav links -->
+  <div class="hidden md:flex items-center gap-10">
+    @for (link of links; track link.id) {
+      <button
+        type="button"
+        (click)="goTo(link.id)"
+        class="font-body text-sm tracking-[0.04em] transition-colors hover:text-sb-gold cursor-pointer"
+        [class.text-sb-gold]="isActive(link.id)"
+        [class.text-[#d8d8d8]]="!isActive(link.id)"
+        [attr.aria-current]="isActive(link.id) ? 'page' : null"
+      >
+        {{ link.label }}
+      </button>
+    }
+  </div>
+
+  <!-- Right side: translate + CTA (desktop), globe + hamburger (mobile) -->
+  <div class="flex items-center gap-3 md:gap-[18px]">
+    <!--
+      Google Translate's own DOM/CSS is unreliable to re-skin directly (it can
+      swap layouts or reparent its <select> outside expectations). Instead,
+      this pill is entirely our own markup; the real widget is stretched
+      invisibly on top so it stays fully clickable/keyboard-accessible while
+      only our design is ever visible.
+    -->
+    <div class="relative hidden md:flex items-center gap-1.5 border border-[#2f2f2f] hover:border-sb-gold rounded-full px-3 py-1.5 transition-colors min-w-[64px] min-h-[30px] overflow-hidden">
+      <svg lucideGlobe class="w-4 h-4 text-sb-gold pointer-events-none"></svg>
+      <span class="font-body text-xs text-[#cfcfcf] pointer-events-none">EN</span>
+      <svg lucideChevronDown class="w-[11px] h-[11px] text-[#888] pointer-events-none"></svg>
+      <div id="google_translate_element" role="group" aria-label="Select language" class="absolute inset-0 opacity-0 cursor-pointer"></div>
+    </div>
+
+    <button
+      type="button"
+      (click)="getAQuote()"
+      class="hidden md:inline-block bg-gradient-to-b from-sb-gold-light to-sb-gold text-sb-black border-none px-6 py-3 font-body text-xs font-bold tracking-[0.14em] uppercase rounded-sm cursor-pointer transition-shadow hover:shadow-[0_6px_24px_rgba(201,168,76,0.45)]"
+    >
+      Get a Quote
+    </button>
+
+    <svg lucideGlobe class="md:hidden text-sb-gold w-[19px] h-[19px]"></svg>
+
+    <button type="button" (click)="toggleMobileMenu()" class="md:hidden text-white" aria-label="Open menu" [attr.aria-expanded]="mobileMenuOpen()">
+      <svg lucideMenu class="w-[26px] h-[26px]"></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile full-screen menu -->
+@if (mobileMenuOpen()) {
+  <div class="fixed inset-0 z-50 bg-sb-black flex flex-col md:hidden" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+    <div class="flex items-center justify-between px-6 py-4 border-b border-sb-gold/[.18]">
+      <span class="font-heading text-xl text-white font-semibold">Spellbound</span>
+      <button type="button" (click)="toggleMobileMenu()" class="text-white" aria-label="Close menu">
+        <svg lucideX class="w-7 h-7"></svg>
+      </button>
+    </div>
+    <div class="flex flex-col items-center justify-center flex-1 gap-8">
+      @for (link of links; track link.id) {
+        <button
+          type="button"
+          (click)="goTo(link.id)"
+          class="font-heading text-3xl transition-colors"
+          [class.text-sb-gold]="isActive(link.id)"
+          [class.text-white]="!isActive(link.id)"
+        >
+          {{ link.label }}
+        </button>
+      }
+      <button
+        type="button"
+        (click)="getAQuote()"
+        class="mt-4 bg-gradient-to-b from-sb-gold-light to-sb-gold text-sb-black border-none px-8 py-4 font-body text-sm font-bold tracking-[0.14em] uppercase rounded-sm cursor-pointer"
+      >
+        Get a Quote
+      </button>
+    </div>
+  </div>
+}

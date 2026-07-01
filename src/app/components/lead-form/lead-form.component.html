@@ -1,0 +1,206 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate class="w-full">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+    <!-- Full Name -->
+    <div>
+      <label for="fullName" class="block font-body text-[10.5px] tracking-[0.16em] uppercase text-sb-gold mb-2 font-bold">Full Name</label>
+      <input
+        id="fullName"
+        type="text"
+        formControlName="fullName"
+        placeholder="Jane Doe"
+        class="w-full box-border bg-[#141414] border rounded-sm text-white px-4 py-3.5 font-body text-[15px] outline-none transition-colors focus:border-sb-gold hover:border-[#3d3d3d]"
+        [class.border-red-500]="isInvalid('fullName')"
+        [class.border-[#2a2a2a]]="!isInvalid('fullName')"
+      />
+      @if (isInvalid('fullName')) {
+        <p class="text-red-400 text-xs mt-1.5">Full name is required.</p>
+      }
+    </div>
+
+    <!-- Email -->
+    <div>
+      <label for="email" class="block font-body text-[10.5px] tracking-[0.16em] uppercase text-sb-gold mb-2 font-bold">Email Address</label>
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        placeholder="jane@email.com"
+        class="w-full box-border bg-[#141414] border rounded-sm text-white px-4 py-3.5 font-body text-[15px] outline-none transition-colors focus:border-sb-gold hover:border-[#3d3d3d]"
+        [class.border-red-500]="isInvalid('email')"
+        [class.border-[#2a2a2a]]="!isInvalid('email')"
+      />
+      @if (isInvalid('email')) {
+        <p class="text-red-400 text-xs mt-1.5">
+          {{ form.controls.email.errors?.['email'] ? 'Enter a valid email address.' : 'Email is required.' }}
+        </p>
+      }
+    </div>
+
+    <!-- Phone -->
+    <div>
+      <label for="phone" class="block font-body text-[10.5px] tracking-[0.16em] uppercase text-sb-gold mb-2 font-bold">Phone Number</label>
+      <input
+        id="phone"
+        type="tel"
+        formControlName="phone"
+        placeholder="+91 74140 81608"
+        class="w-full box-border bg-[#141414] border rounded-sm text-white px-4 py-3.5 font-body text-[15px] outline-none transition-colors focus:border-sb-gold hover:border-[#3d3d3d]"
+        [class.border-red-500]="isInvalid('phone')"
+        [class.border-[#2a2a2a]]="!isInvalid('phone')"
+      />
+      @if (isInvalid('phone')) {
+        <p class="text-red-400 text-xs mt-1.5">Enter a valid phone number (min. 10 digits).</p>
+      }
+    </div>
+
+    <!-- Service Needed -->
+    <div>
+      <label for="service" class="block font-body text-[10.5px] tracking-[0.16em] uppercase text-sb-gold mb-2 font-bold">Service Needed</label>
+      <select
+        id="service"
+        formControlName="service"
+        class="w-full box-border bg-[#141414] border rounded-sm text-[#e8e8e8] px-4 py-3.5 font-body text-[15px] outline-none appearance-none cursor-pointer transition-colors focus:border-sb-gold hover:border-[#3d3d3d]"
+        [class.border-red-500]="isInvalid('service')"
+        [class.border-[#2a2a2a]]="!isInvalid('service')"
+      >
+        <option value="" disabled>Select a service…</option>
+        <option value="Flight">✈️ Flight Booking</option>
+        <option value="Visa">🛂 Visa Assistance</option>
+        <option value="Both">✈️🛂 Both</option>
+      </select>
+      @if (isInvalid('service')) {
+        <p class="text-red-400 text-xs mt-1.5">Please choose a service.</p>
+      }
+    </div>
+
+    <!-- Flight group -->
+    @if (showFlight) {
+      <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-5 border-l-2 border-sb-gold pl-5" formGroupName="flight">
+        <div>
+          <label for="from" class="block font-body text-[10.5px] tracking-[0.16em] uppercase text-sb-gold mb-2 font-bold">Flying From</label>
+          <input id="from" type="text" formControlName="from" placeholder="City or airport"
+            class="w-full box-border bg-[#141414] border rounded-sm text-white px-4 py-3.5 font-body text-[15px] outline-none transition-colors focus:border-sb-gold hover:border-[#3d3d3d]"
+            [class.border-red-500]="isInvalid('flight.from')" [class.border-[#2a2a2a]]="!isInvalid('flight.from')" />
+          @if (isInvalid('flight.from')) { <p class="text-red-400 text-xs mt-1.5">Departure city is required.</p> }
+        </div>
+        <div>
+          <label for="to" class="block font-body text-[10.5px] tracking-[0.16em] uppercase text-sb-gold mb-2 font-bold">Flying To</label>
+          <input id="to" type="text" formControlName="to" placeholder="City or airport"
+            class="w-full box-border bg-[#141414] border rounded-sm text-white px-4 py-3.5 font-body text-[15px] outline-none transition-colors focus:border-sb-gold hover:border-[#3d3d3d]"
+            [class.border-red-500]="isInvalid('flight.to')" [class.border-[#2a2a2a]]="!isInvalid('flight.to')" />
+          @if (isInvalid('flight.to')) { <p class="text-red-400 text-xs mt-1.5">Destination city is required.</p> }
+        </div>
+        <div>
+          <label for="departureDate" class="block font-body text-[10.5px] tracking-[0.16em] uppercase text-sb-gold mb-2 font-bold">Departure Date</label>
+          <input id="departureDate" type="date" formControlName="departureDate"
+            class="w-full box-border bg-[#141414] border rounded-sm text-white px-4 py-3.5 font-body text-[15px] outline-none transition-colors focus:border-sb-gold hover:border-[#3d3d3d]"
+            [class.border-red-500]="isInvalid('flight.departureDate')" [class.border-[#2a2a2a]]="!isInvalid('flight.departureDate')" />
+          @if (isInvalid('flight.departureDate')) { <p class="text-red-400 text-xs mt-1.5">Departure date is required.</p> }
+        </div>
+        <div>
+          <label for="returnDate" class="block font-body text-[10.5px] tracking-[0.16em] uppercase text-sb-gold mb-2 font-bold">Return Date (Optional)</label>
+          <input id="returnDate" type="date" formControlName="returnDate"
+            class="w-full box-border bg-[#141414] border border-[#2a2a2a] rounded-sm text-white px-4 py-3.5 font-body text-[15px] outline-none transition-colors focus:border-sb-gold hover:border-[#3d3d3d]" />
+        </div>
+        <div>
+          <label for="passengers" class="block font-body text-[10.5px] tracking-[0.16em] uppercase text-sb-gold mb-2 font-bold">No. of Passengers</label>
+          <select id="passengers" formControlName="passengers"
+            class="w-full box-border bg-[#141414] border rounded-sm text-[#e8e8e8] px-4 py-3.5 font-body text-[15px] outline-none appearance-none cursor-pointer transition-colors focus:border-sb-gold hover:border-[#3d3d3d]"
+            [class.border-red-500]="isInvalid('flight.passengers')" [class.border-[#2a2a2a]]="!isInvalid('flight.passengers')">
+            @for (n of passengerOptions; track n) {
+              <option [value]="n">{{ n }}</option>
+            }
+          </select>
+        </div>
+        <div>
+          <label for="travelClass" class="block font-body text-[10.5px] tracking-[0.16em] uppercase text-sb-gold mb-2 font-bold">Travel Class</label>
+          <select id="travelClass" formControlName="travelClass"
+            class="w-full box-border bg-[#141414] border rounded-sm text-[#e8e8e8] px-4 py-3.5 font-body text-[15px] outline-none appearance-none cursor-pointer transition-colors focus:border-sb-gold hover:border-[#3d3d3d]"
+            [class.border-red-500]="isInvalid('flight.travelClass')" [class.border-[#2a2a2a]]="!isInvalid('flight.travelClass')">
+            <option value="" disabled>Select class…</option>
+            @for (c of travelClasses; track c) {
+              <option [value]="c">{{ c }}</option>
+            }
+          </select>
+          @if (isInvalid('flight.travelClass')) { <p class="text-red-400 text-xs mt-1.5">Please choose a travel class.</p> }
+        </div>
+      </div>
+    }
+
+    <!-- Visa group -->
+    @if (showVisa) {
+      <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-5 border-l-2 border-sb-gold pl-5" formGroupName="visa">
+        <div>
+          <label for="nationality" class="block font-body text-[10.5px] tracking-[0.16em] uppercase text-sb-gold mb-2 font-bold">Nationality</label>
+          <input id="nationality" type="text" formControlName="nationality" placeholder="e.g. Indian"
+            class="w-full box-border bg-[#141414] border rounded-sm text-white px-4 py-3.5 font-body text-[15px] outline-none transition-colors focus:border-sb-gold hover:border-[#3d3d3d]"
+            [class.border-red-500]="isInvalid('visa.nationality')" [class.border-[#2a2a2a]]="!isInvalid('visa.nationality')" />
+          @if (isInvalid('visa.nationality')) { <p class="text-red-400 text-xs mt-1.5">Nationality is required.</p> }
+        </div>
+        <div>
+          <label for="destinationCountry" class="block font-body text-[10.5px] tracking-[0.16em] uppercase text-sb-gold mb-2 font-bold">Destination Country</label>
+          <input id="destinationCountry" type="text" formControlName="destinationCountry" placeholder="e.g. Japan"
+            class="w-full box-border bg-[#141414] border rounded-sm text-white px-4 py-3.5 font-body text-[15px] outline-none transition-colors focus:border-sb-gold hover:border-[#3d3d3d]"
+            [class.border-red-500]="isInvalid('visa.destinationCountry')" [class.border-[#2a2a2a]]="!isInvalid('visa.destinationCountry')" />
+          @if (isInvalid('visa.destinationCountry')) { <p class="text-red-400 text-xs mt-1.5">Destination country is required.</p> }
+        </div>
+        <div>
+          <label for="visaType" class="block font-body text-[10.5px] tracking-[0.16em] uppercase text-sb-gold mb-2 font-bold">Visa Type</label>
+          <select id="visaType" formControlName="visaType"
+            class="w-full box-border bg-[#141414] border rounded-sm text-[#e8e8e8] px-4 py-3.5 font-body text-[15px] outline-none appearance-none cursor-pointer transition-colors focus:border-sb-gold hover:border-[#3d3d3d]"
+            [class.border-red-500]="isInvalid('visa.visaType')" [class.border-[#2a2a2a]]="!isInvalid('visa.visaType')">
+            <option value="" disabled>Select visa type…</option>
+            @for (v of visaTypes; track v) {
+              <option [value]="v">{{ v }}</option>
+            }
+          </select>
+          @if (isInvalid('visa.visaType')) { <p class="text-red-400 text-xs mt-1.5">Please choose a visa type.</p> }
+        </div>
+        <div>
+          <label for="expectedTravelDate" class="block font-body text-[10.5px] tracking-[0.16em] uppercase text-sb-gold mb-2 font-bold">Expected Travel Date</label>
+          <input id="expectedTravelDate" type="date" formControlName="expectedTravelDate"
+            class="w-full box-border bg-[#141414] border rounded-sm text-white px-4 py-3.5 font-body text-[15px] outline-none transition-colors focus:border-sb-gold hover:border-[#3d3d3d]"
+            [class.border-red-500]="isInvalid('visa.expectedTravelDate')" [class.border-[#2a2a2a]]="!isInvalid('visa.expectedTravelDate')" />
+          @if (isInvalid('visa.expectedTravelDate')) { <p class="text-red-400 text-xs mt-1.5">Expected travel date is required.</p> }
+        </div>
+      </div>
+    }
+
+    <!-- Additional Message -->
+    <div class="md:col-span-2">
+      <label for="message" class="block font-body text-[10.5px] tracking-[0.16em] uppercase text-sb-gold mb-2 font-bold">Additional Message (Optional)</label>
+      <textarea
+        id="message"
+        formControlName="message"
+        rows="4"
+        placeholder="Tell us about your ideal journey…"
+        class="w-full box-border bg-[#141414] border border-[#2a2a2a] rounded-sm text-white px-4 py-3.5 font-body text-[15px] outline-none resize-y transition-colors focus:border-sb-gold hover:border-[#3d3d3d]"
+      ></textarea>
+    </div>
+  </div>
+
+  <button
+    type="submit"
+    [disabled]="loading"
+    class="mt-6 w-full flex items-center justify-center gap-2 bg-gradient-to-b from-sb-gold-light to-sb-gold text-sb-black border-none py-[18px] font-body text-sm font-bold tracking-[0.18em] uppercase rounded-sm cursor-pointer transition-all hover:shadow-[0_8px_30px_rgba(201,168,76,0.4)] hover:-translate-y-px disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none"
+  >
+    @if (loading) {
+      <svg lucideLoaderCircle class="w-4 h-4 animate-spin"></svg>
+      Sending…
+    } @else {
+      Send My Enquiry →
+    }
+  </button>
+
+  <div class="flex flex-col items-center gap-1.5 mt-4">
+    <p class="flex items-center gap-1.5 font-body text-[13px] text-[#8a8a8a] m-0">
+      <svg lucideCheck class="w-3.5 h-3.5 text-sb-gold"></svg>
+      We'll respond within 24 hours
+    </p>
+    <p class="flex items-center gap-1.5 font-body text-[13px] text-[#8a8a8a] m-0">
+      <svg lucideLock class="w-3.5 h-3.5 text-sb-gold"></svg>
+      Your details are safe with us
+    </p>
+  </div>
+</form>

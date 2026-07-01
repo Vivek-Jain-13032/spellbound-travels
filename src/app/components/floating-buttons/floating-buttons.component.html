@@ -1,0 +1,31 @@
+<aside aria-label="Quick contact">
+  <a
+    [href]="contact.whatsappHref"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Chat on WhatsApp"
+    class="group fixed bottom-5 right-5 md:bottom-[30px] md:right-[30px] z-50 w-[50px] h-[50px] md:w-[58px] md:h-[58px] rounded-full bg-[#25D366] border-2 border-sb-gold flex items-center justify-center shadow-[0_8px_26px_rgba(0,0,0,0.5)] focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-sb-gold"
+  >
+    <app-social-icon icon="whatsapp" svgClass="w-6 h-6 md:w-[30px] md:h-[30px] text-white"></app-social-icon>
+    <span
+      role="tooltip"
+      class="pointer-events-none absolute right-full mr-3 whitespace-nowrap bg-[#141414] border border-sb-gold/40 text-white text-xs font-body px-3 py-1.5 rounded opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity"
+    >
+      Chat on WhatsApp
+    </span>
+  </a>
+
+  <a
+    [href]="contact.phoneHref"
+    aria-label="Call Us"
+    class="group fixed bottom-5 left-5 md:bottom-[30px] md:left-[30px] z-50 w-[50px] h-[50px] md:w-[58px] md:h-[58px] rounded-full bg-gradient-to-b from-sb-gold-light to-sb-gold flex items-center justify-center shadow-[0_8px_26px_rgba(0,0,0,0.5)] focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-sb-gold"
+  >
+    <svg lucidePhone class="w-5 h-5 md:w-[26px] md:h-[26px] text-sb-black"></svg>
+    <span
+      role="tooltip"
+      class="pointer-events-none absolute left-full ml-3 whitespace-nowrap bg-[#141414] border border-sb-gold/40 text-white text-xs font-body px-3 py-1.5 rounded opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity"
+    >
+      Call Us
+    </span>
+  </a>
+</aside>

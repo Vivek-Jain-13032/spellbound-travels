@@ -1,0 +1,29 @@
+<app-navbar></app-navbar>
+
+<main>
+  <app-hero></app-hero>
+  <app-trust-bar></app-trust-bar>
+  <app-services></app-services>
+  <app-why-choose-us></app-why-choose-us>
+  <app-about></app-about>
+
+  <section id="contact" appScrollSpy class="relative bg-sb-black px-6 py-16 md:px-[60px] md:py-24 scroll-mt-16 md:scroll-mt-[73px] overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(80%_60%_at_50%_0%,rgba(201,168,76,0.08),transparent_60%)]"></div>
+
+    <div appReveal class="relative max-w-[760px] mx-auto">
+      <div class="text-center mb-8 md:mb-11">
+        <div class="font-body text-[11px] md:text-xs tracking-[0.3em] md:tracking-[0.34em] uppercase text-sb-gold mb-3 md:mb-4">Get Started</div>
+        <h2 class="font-heading text-[30px] md:text-[44px] text-white font-medium mb-2.5 md:mb-3.5">Plan Your Journey</h2>
+        <p class="font-body text-sm md:text-base text-[#a2a2a2] font-light m-0">Tell us where you're headed and receive a free, tailored quote.</p>
+      </div>
+
+      <div class="bg-[#0e0e0e] border border-[#232323] rounded-md p-6 md:p-12">
+        <app-lead-form></app-lead-form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<app-footer></app-footer>
+<app-floating-buttons></app-floating-buttons>
+<app-toast></app-toast>
