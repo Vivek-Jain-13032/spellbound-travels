@@ -1,27 +1,31 @@
-<section id="home" appScrollSpy class="relative flex items-center min-h-[100svh] overflow-hidden bg-[#050505] scroll-mt-16 md:scroll-mt-[73px]">
+<section id="home" appScrollSpy class="relative flex items-center overflow-hidden bg-[#050505] scroll-mt-16 md:scroll-mt-[73px] md:h-[660px]">
   <div class="absolute inset-0 hero-pattern"></div>
   <div class="absolute inset-0 hero-photo"></div>
   <div class="absolute inset-0 hero-overlay"></div>
 
-  <div appReveal class="relative px-6 py-20 md:px-[60px] md:py-0 max-w-[820px]">
-    <div class="flex items-center gap-3 md:gap-[14px] mb-5 md:mb-[26px]">
+  <div appReveal class="relative px-6 pt-14 pb-[60px] md:px-[60px] md:py-0 max-w-[820px]">
+    <div class="flex items-center gap-2.5 md:gap-[14px] mb-5 md:mb-[26px]">
       <span class="w-7 md:w-11 h-px bg-sb-gold"></span>
-      <span class="font-body text-[10px] md:text-[13px] tracking-[0.24em] md:tracking-[0.34em] uppercase text-sb-gold">Journeys That Leave You Spellbound</span>
+      <span class="font-body text-[10px] md:text-[13px] tracking-[0.24em] md:tracking-[0.34em] uppercase text-sb-gold">
+        <span class="md:hidden">Spellbound</span>
+        <span class="hidden md:inline">Journeys That Leave You Spellbound</span>
+      </span>
     </div>
 
     <h1 class="font-heading text-[40px] md:text-[74px] leading-[1.12] md:leading-[1.08] text-white font-medium tracking-[-0.01em] m-0">
-      Your Journey to the<br>World Starts Here
+      Your Journey to the<br class="hidden md:inline"> World Starts Here
     </h1>
 
     <p class="font-body text-[15px] md:text-[19px] leading-[1.6] text-[#c2c2c2] font-light my-5 md:my-[28px] mb-[30px] md:mb-10 max-w-[560px]">
-      Expert Flight Bookings &amp; Visa Assistance — Worldwide. A private travel concierge for those who journey in style.
+      <span class="md:hidden">Expert Flight Bookings &amp; Visa Assistance — Worldwide.</span>
+      <span class="hidden md:inline">Expert Flight Bookings &amp; Visa Assistance — Worldwide. A private travel concierge for those who journey in style.</span>
     </p>
 
-    <div class="flex flex-col md:flex-row gap-3 md:gap-[18px]">
+    <div class="flex flex-col md:flex-row gap-[13px] md:gap-[18px]">
       <button
         type="button"
         (click)="bookAFlight()"
-        class="flex items-center justify-center md:justify-start gap-2.5 bg-gradient-to-b from-sb-gold-light to-sb-gold text-sb-black border-none px-6 py-4 md:px-[34px] md:py-[17px] font-body text-[13px] font-bold tracking-[0.14em] uppercase rounded-sm cursor-pointer transition-all hover:shadow-[0_10px_34px_rgba(201,168,76,0.45)] hover:-translate-y-0.5"
+        class="flex items-center justify-center md:justify-start gap-2.5 bg-gradient-to-b from-sb-gold-light to-sb-gold text-sb-black border-none p-4 md:px-[34px] md:py-[17px] font-body text-[13px] font-bold tracking-[0.14em] uppercase rounded-sm cursor-pointer transition-all hover:shadow-[0_10px_34px_rgba(201,168,76,0.45)] hover:-translate-y-0.5"
       >
         <svg lucidePlaneTakeoff class="w-[17px] h-[17px]"></svg>
         Book a Flight
@@ -29,7 +33,7 @@
       <button
         type="button"
         (click)="visaHelp()"
-        class="flex items-center justify-center md:justify-start gap-2.5 bg-transparent text-sb-gold border border-sb-gold px-6 py-4 md:px-[34px] md:py-[17px] font-body text-[13px] font-bold tracking-[0.14em] uppercase rounded-sm cursor-pointer transition-colors hover:bg-sb-gold hover:text-sb-black"
+        class="flex items-center justify-center md:justify-start gap-2.5 bg-transparent text-sb-gold border border-sb-gold p-4 md:px-[34px] md:py-[17px] font-body text-[13px] font-bold tracking-[0.14em] uppercase rounded-sm cursor-pointer transition-colors hover:bg-sb-gold hover:text-sb-black"
       >
         <svg lucideIdCard class="w-[18px] h-[18px]"></svg>
         Visa Help
