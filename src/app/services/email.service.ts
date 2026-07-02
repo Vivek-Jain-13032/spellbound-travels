@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
 import emailjs from '@emailjs/browser';
 import { environment } from '../../environments/environment';
-import { LeadFormValue } from '../models/lead-form.model';
+import { LeadFormValue, ServiceNeeded } from '../models/lead-form.model';
+
+const SERVICE_LABELS: Record<ServiceNeeded, string> = {
+  Flight: 'Flight Booking',
+  Visa: 'Visa Assistance',
+  Both: 'Flight Booking and Visa Assistance',
+};
 
 /**
  * Sends lead enquiries via EmailJS — no backend required.
@@ -40,7 +46,7 @@ export class EmailService {
       full_name: value.fullName,
       email: value.email,
       phone: value.phone,
-      service: value.service,
+      service: value.service ? SERVICE_LABELS[value.service] : '',
       flying_from: value.flight.from,
       flying_to: value.flight.to,
       departure_date: value.flight.departureDate,
