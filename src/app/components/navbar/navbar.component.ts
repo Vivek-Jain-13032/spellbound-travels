@@ -60,6 +60,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadGoogleTranslate();
+    this.currentLanguage.set(this.readLanguageFromCookie());
   }
 
   @HostListener('window:scroll')
@@ -99,8 +100,8 @@ export class NavbarComponent implements OnInit {
 
   selectLanguage(language: LanguageOption): void {
     this.languageMenuOpen.set(false);
-    this.currentLanguage.set(language.short);
-    this.applyTranslation(language.code);
+    this.setLanguageCookie(language.code === 'en' ? null : language.code);
+    window.location.reload();
   }
 
   isActive(sectionId: string): boolean {
@@ -113,10 +114,14 @@ export class NavbarComponent implements OnInit {
    * NotFoundError from Angular's own removeChild/insertBefore calls
    * elsewhere on the page; see main.ts for the accompanying DOM patch.
    *
-   * The widget itself is never shown — its native <select> popup can't be
-   * restyled by any site (browser/OS-level limitation), so instead our own
-   * language menu (see the template) drives it programmatically via
-   * applyTranslation() below.
+   * The widget's own UI is never shown — its language picker is a native
+   * <select> in every layout, an OS/browser popup no site's CSS can
+   * restyle. It's also not driven by simulating a change event on that
+   * <select>: Google's internal listener for that has changed across
+   * script versions and isn't a stable public API, so triggering it that
+   * way is unreliable. Instead, language selection sets the `googtrans`
+   * cookie and reloads — that's the documented mechanism the script itself
+   * checks on initialization, which is what actually performs translation.
    */
   private loadGoogleTranslate(): void {
     if (document.getElementById('google-translate-script')) return;
@@ -143,23 +148,22 @@ export class NavbarComponent implements OnInit {
     document.body.appendChild(script);
   }
 
-  /**
-   * Google's widget script creates its <select id="goog-te-combo"> only
-   * once translate.google.com finishes loading (asynchronous, network- and
-   * cache-dependent) — retry briefly if a language is picked before it's
-   * ready.
-   */
-  private applyTranslation(code: string, attempt = 0): void {
-    const select = document.querySelector<HTMLSelectElement>(
-      '#google_translate_element select.goog-te-combo',
-    );
-    if (!select) {
-      if (attempt < 15) {
-        setTimeout(() => this.applyTranslation(code, attempt + 1), 300);
-      }
+  private readLanguageFromCookie(): string {
+    const match = document.cookie.match(/googtrans=\/en\/([a-zA-Z-]+)/);
+    if (!match) return 'EN';
+    const found = this.languages.find((l) => l.code.toLowerCase() === match[1].toLowerCase());
+    return found ? found.short : 'EN';
+  }
+
+  private setLanguageCookie(code: string | null): void {
+    const hostname = window.location.hostname;
+    if (!code) {
+      document.cookie = 'googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+      document.cookie = `googtrans=; path=/; domain=.${hostname}; expires=Thu, 01 Jan 1970 00:00:00 UTC`;
       return;
     }
-    select.value = code;
-    select.dispatchEvent(new Event('change'));
+    const value = `/en/${code}`;
+    document.cookie = `googtrans=${value}; path=/`;
+    document.cookie = `googtrans=${value}; path=/; domain=.${hostname}`;
   }
 }
