@@ -106,7 +106,7 @@ Two photo placeholders (gold-lit striped pattern + icon) are wired up as CSS bac
 | File | Used for |
 |---|---|
 | `hero-bg.jpg` | Hero section background (aircraft above clouds / gilded world map) |
-| `about-portrait.jpg` | About section portrait of Vivek, founder |
+| `about-portrait.jpg` | About section portrait of Nimit, founder |
 | `og-image.jpg` | Social share preview image (1200×630px recommended) |
 
 Also replace `public/favicon.ico` with a branded favicon when ready.
