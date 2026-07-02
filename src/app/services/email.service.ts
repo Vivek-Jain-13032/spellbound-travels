@@ -33,6 +33,10 @@ export class EmailService {
     return {
       to_admin_email: environment.contact.adminEmail,
       to_email: value.email,
+      submitted_at: new Date().toLocaleString('en-IN', {
+        dateStyle: 'medium',
+        timeStyle: 'short',
+      }),
       full_name: value.fullName,
       email: value.email,
       phone: value.phone,
