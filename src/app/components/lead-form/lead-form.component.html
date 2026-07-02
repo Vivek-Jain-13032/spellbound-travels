@@ -72,22 +72,6 @@
       }
     </div>
 
-    <!-- Number of Travelers -->
-    <div>
-      <label for="travelers" class="block font-body text-[10.5px] tracking-[0.16em] uppercase text-sb-gold mb-[9px] font-bold">Number of Travelers</label>
-      <app-select
-        id="travelers"
-        formControlName="travelers"
-        [options]="travelerOptions"
-        placeholder="Select…"
-        ariaLabel="Number of Travelers"
-        [invalid]="isInvalid('travelers')"
-      ></app-select>
-      @if (isInvalid('travelers')) {
-        <p class="text-red-400 text-xs mt-1.5">Please select the number of travelers.</p>
-      }
-    </div>
-
     <!-- Trip Type -->
     <div>
       <label for="tripType" class="block font-body text-[10.5px] tracking-[0.16em] uppercase text-sb-gold mb-[9px] font-bold">Trip Type</label>
@@ -102,6 +86,43 @@
       @if (isInvalid('tripType')) {
         <p class="text-red-400 text-xs mt-1.5">Please choose a trip type.</p>
       }
+    </div>
+
+    <!-- Travelers -->
+    <div class="md:col-span-2">
+      <label class="block font-body text-[10.5px] tracking-[0.16em] uppercase text-sb-gold mb-[9px] font-bold">Travelers</label>
+      <div class="grid grid-cols-3 gap-3">
+        <div>
+          <label for="adults" class="block font-body text-[11px] text-[#8a8a8a] mb-1.5">Adults (12+ yrs)</label>
+          <app-select
+            id="adults"
+            formControlName="adults"
+            [options]="adultOptions"
+            ariaLabel="Adults (12+ years)"
+            [invalid]="isInvalid('adults')"
+          ></app-select>
+        </div>
+        <div>
+          <label for="children" class="block font-body text-[11px] text-[#8a8a8a] mb-1.5">Children (2–11 yrs)</label>
+          <app-select
+            id="children"
+            formControlName="children"
+            [options]="childrenOptions"
+            ariaLabel="Children (2 to 11 years)"
+            [invalid]="isInvalid('children')"
+          ></app-select>
+        </div>
+        <div>
+          <label for="infants" class="block font-body text-[11px] text-[#8a8a8a] mb-1.5">Infants (0–2 yrs)</label>
+          <app-select
+            id="infants"
+            formControlName="infants"
+            [options]="infantOptions"
+            ariaLabel="Infants (0 to 2 years)"
+            [invalid]="isInvalid('infants')"
+          ></app-select>
+        </div>
+      </div>
     </div>
 
     <!-- Preferred Contact Method -->
@@ -129,6 +150,23 @@
     <!-- Flight group -->
     @if (showFlight) {
       <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-5 border-l-2 border-sb-gold pl-5" formGroupName="flight">
+        <div class="md:col-span-2">
+          <label class="block font-body text-[10.5px] tracking-[0.16em] uppercase text-sb-gold mb-[9px] font-bold">Journey Type</label>
+          <div class="flex gap-2" role="radiogroup" aria-label="Journey Type">
+            @for (opt of journeyTypeOptions; track opt.value) {
+              <label
+                class="flex-1 flex items-center justify-center border rounded-sm py-3.5 font-body text-sm cursor-pointer transition-colors"
+                [class.border-sb-gold]="journeyType === opt.value"
+                [class.text-sb-gold]="journeyType === opt.value"
+                [class.border-[#2a2a2a]]="journeyType !== opt.value"
+                [class.text-[#d8d8d8]]="journeyType !== opt.value"
+              >
+                <input type="radio" formControlName="journeyType" [value]="opt.value" class="sr-only" />
+                {{ opt.label }}
+              </label>
+            }
+          </div>
+        </div>
         <div>
           <label for="from" class="block font-body text-[10.5px] tracking-[0.16em] uppercase text-sb-gold mb-[9px] font-bold">Flying From</label>
           <input id="from" type="text" formControlName="from" placeholder="City or airport"
@@ -159,25 +197,35 @@
           />
           @if (isInvalid('flight.departureDate')) { <p class="text-red-400 text-xs mt-1.5">Departure date is required.</p> }
         </div>
-        <div>
-          <label for="returnDate" class="block font-body text-[10.5px] tracking-[0.16em] uppercase text-sb-gold mb-[9px] font-bold">Return Date (Optional)</label>
-          <input
-            id="returnDate"
-            type="text"
-            readonly
-            autocomplete="off"
-            appDatePicker
-            [minDate]="returnDateMin"
-            formControlName="returnDate"
-            placeholder="Select date…"
-            class="w-full box-border bg-[#141414] border rounded-sm text-white px-4 py-3.5 font-body text-[15px] outline-none transition-colors focus:border-sb-gold hover:border-[#3d3d3d] cursor-pointer"
-            [class.border-red-500]="form.controls.flight.errors?.['dateNotBefore'] && form.controls.flight.controls.returnDate.touched"
-            [class.border-[#2a2a2a]]="!(form.controls.flight.errors?.['dateNotBefore'] && form.controls.flight.controls.returnDate.touched)"
-          />
-          @if (form.controls.flight.errors?.['dateNotBefore'] && form.controls.flight.controls.returnDate.touched) {
-            <p class="text-red-400 text-xs mt-1.5">Return date can't be before your departure date.</p>
-          }
-        </div>
+        @if (journeyType === 'Round Trip') {
+          <div>
+            <label for="returnDate" class="block font-body text-[10.5px] tracking-[0.16em] uppercase text-sb-gold mb-[9px] font-bold">Return Date</label>
+            <input
+              id="returnDate"
+              type="text"
+              readonly
+              autocomplete="off"
+              appDatePicker
+              [minDate]="returnDateMin"
+              formControlName="returnDate"
+              placeholder="Select date…"
+              class="w-full box-border bg-[#141414] border rounded-sm text-white px-4 py-3.5 font-body text-[15px] outline-none transition-colors focus:border-sb-gold hover:border-[#3d3d3d] cursor-pointer"
+              [class.border-red-500]="isInvalid('flight.returnDate') || (form.controls.flight.errors?.['dateNotBefore'] && form.controls.flight.controls.returnDate.touched)"
+              [class.border-[#2a2a2a]]="!isInvalid('flight.returnDate') && !(form.controls.flight.errors?.['dateNotBefore'] && form.controls.flight.controls.returnDate.touched)"
+            />
+            @if (form.controls.flight.errors?.['dateNotBefore'] && form.controls.flight.controls.returnDate.touched) {
+              <p class="text-red-400 text-xs mt-1.5">Return date can't be before your departure date.</p>
+            } @else if (isInvalid('flight.returnDate')) {
+              <p class="text-red-400 text-xs mt-1.5">Return date is required for a round trip.</p>
+            }
+          </div>
+        } @else if (journeyType === 'Multi City') {
+          <div class="flex items-end">
+            <p class="font-body text-[13px] text-[#8a8a8a] leading-relaxed m-0">
+              Multiple stops? Just describe your full itinerary in the message box below and we'll sort out the details.
+            </p>
+          </div>
+        }
         <div class="md:col-span-2">
           <label for="travelClass" class="block font-body text-[10.5px] tracking-[0.16em] uppercase text-sb-gold mb-[9px] font-bold">Travel Class</label>
           <app-select

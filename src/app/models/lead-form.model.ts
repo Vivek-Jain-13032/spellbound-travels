@@ -2,6 +2,8 @@ export type ServiceNeeded = 'Flight' | 'Visa' | 'Both';
 
 export type TravelClass = 'Economy' | 'Business' | 'First Class';
 
+export type JourneyType = 'One Way' | 'Round Trip' | 'Multi City';
+
 export type VisaType = 'Tourist' | 'Business' | 'Student' | 'Work' | 'Transit';
 
 export type PreferredContact = 'Email' | 'Phone' | 'WhatsApp';
@@ -9,6 +11,7 @@ export type PreferredContact = 'Email' | 'Phone' | 'WhatsApp';
 export type TripType = 'Leisure' | 'Business' | 'Honeymoon' | 'Family' | 'Group';
 
 export interface FlightDetails {
+  journeyType: JourneyType | '';
   from: string;
   to: string;
   departureDate: string;
@@ -28,7 +31,9 @@ export interface LeadFormValue {
   email: string;
   phone: string;
   service: ServiceNeeded | '';
-  travelers: string;
+  adults: string;
+  children: string;
+  infants: string;
   preferredContact: PreferredContact | '';
   tripType: TripType | '';
   flight: FlightDetails;

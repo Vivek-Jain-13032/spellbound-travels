@@ -14,6 +14,9 @@ import { DatePickerDirective } from '../../directives/date-picker.directive';
 
 const MESSAGE_MAX_LENGTH = 1000;
 
+const numberOptions = (count: number, start = 0): SelectOption[] =>
+  Array.from({ length: count }, (_, i) => ({ value: String(i + start), label: String(i + start) }));
+
 @Component({
   selector: 'app-lead-form',
   standalone: true,
@@ -33,14 +36,18 @@ export class LeadFormComponent implements OnInit, OnDestroy {
     { value: 'Visa', label: 'Visa Assistance', icons: ['id-card'] },
     { value: 'Both', label: 'Both', icons: ['plane', 'id-card'] },
   ];
-  readonly travelerOptions: SelectOption[] = Array.from({ length: 9 }, (_, i) => ({
-    value: String(i + 1),
-    label: String(i + 1),
-  }));
+  readonly adultOptions: SelectOption[] = numberOptions(9, 1); // 1–9
+  readonly childrenOptions: SelectOption[] = numberOptions(9, 0); // 0–8
+  readonly infantOptions: SelectOption[] = numberOptions(5, 0); // 0–4
   readonly tripTypeOptions: SelectOption[] = ['Leisure', 'Business', 'Honeymoon', 'Family', 'Group'].map((v) => ({
     value: v,
     label: v,
   }));
+  readonly journeyTypeOptions: { value: 'One Way' | 'Round Trip' | 'Multi City'; label: string }[] = [
+    { value: 'One Way', label: 'One Way' },
+    { value: 'Round Trip', label: 'Round Trip' },
+    { value: 'Multi City', label: 'Multi City' },
+  ];
   readonly travelClassOptions: SelectOption[] = ['Economy', 'Business', 'First Class'].map((v) => ({
     value: v,
     label: v,
@@ -60,11 +67,14 @@ export class LeadFormComponent implements OnInit, OnDestroy {
     email: ['', [Validators.required, Validators.email]],
     phone: ['', [Validators.required, phoneDigitsInRange(10)]],
     service: ['' as ServiceNeeded | '', Validators.required],
-    travelers: ['1', Validators.required],
+    adults: ['1', Validators.required],
+    children: ['0', Validators.required],
+    infants: ['0', Validators.required],
     preferredContact: ['' as 'Email' | 'Phone' | 'WhatsApp' | '', Validators.required],
     tripType: ['', Validators.required],
     flight: this.fb.nonNullable.group(
       {
+        journeyType: ['One Way' as 'One Way' | 'Round Trip' | 'Multi City'],
         from: [''],
         to: [''],
         departureDate: [''],
@@ -90,6 +100,7 @@ export class LeadFormComponent implements OnInit, OnDestroy {
   loading = false;
 
   private serviceSub?: Subscription;
+  private journeyTypeSub?: Subscription;
 
   constructor() {
     // "Enquire Now" / hero CTAs pre-select a service and scroll here.
@@ -105,10 +116,25 @@ export class LeadFormComponent implements OnInit, OnDestroy {
     this.serviceSub = this.form.controls.service.valueChanges.subscribe((service) => {
       this.applyConditionalValidators(service);
     });
+
+    // Return Date only makes sense (and is only required) for Round Trip;
+    // One Way/Multi City hide it entirely (see template) and shouldn't
+    // carry a stale value or validator when hidden.
+    this.journeyTypeSub = this.form.controls.flight.controls.journeyType.valueChanges.subscribe((journeyType) => {
+      const returnDate = this.form.controls.flight.controls.returnDate;
+      if (journeyType === 'Round Trip') {
+        returnDate.setValidators(Validators.required);
+      } else {
+        returnDate.setValue('');
+        returnDate.clearValidators();
+      }
+      returnDate.updateValueAndValidity();
+    });
   }
 
   ngOnDestroy(): void {
     this.serviceSub?.unsubscribe();
+    this.journeyTypeSub?.unsubscribe();
   }
 
   get showFlight(): boolean {
@@ -119,6 +145,10 @@ export class LeadFormComponent implements OnInit, OnDestroy {
   get showVisa(): boolean {
     const service = this.form.controls.service.value;
     return service === 'Visa' || service === 'Both';
+  }
+
+  get journeyType(): string {
+    return this.form.controls.flight.controls.journeyType.value;
   }
 
   get todayIso(): string {
@@ -173,10 +203,12 @@ export class LeadFormComponent implements OnInit, OnDestroy {
       email: '',
       phone: '',
       service: '',
-      travelers: '1',
+      adults: '1',
+      children: '0',
+      infants: '0',
       preferredContact: '',
       tripType: '',
-      flight: { from: '', to: '', departureDate: '', returnDate: '', travelClass: '' },
+      flight: { journeyType: 'One Way', from: '', to: '', departureDate: '', returnDate: '', travelClass: '' },
       visa: { nationality: '', destinationCountry: '', visaType: '', expectedTravelDate: '' },
       message: '',
       consent: false,

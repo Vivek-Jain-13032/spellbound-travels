@@ -47,9 +47,13 @@ export class EmailService {
       email: value.email,
       phone: value.phone,
       service: value.service ? SERVICE_LABELS[value.service] : '',
-      travelers: value.travelers,
+      travelers: this.formatTravelers(value.adults, value.children, value.infants),
+      adults: value.adults,
+      children: value.children,
+      infants: value.infants,
       preferred_contact: value.preferredContact,
       trip_type: value.tripType,
+      journey_type: value.flight.journeyType,
       flying_from: value.flight.from,
       flying_to: value.flight.to,
       departure_date: value.flight.departureDate,
@@ -61,5 +65,18 @@ export class EmailService {
       expected_travel_date: value.visa.expectedTravelDate,
       message: value.message,
     };
+  }
+
+  /** e.g. "2 Adults, 1 Child, 1 Infant" — readable summary for the email body. */
+  private formatTravelers(adults: string, children: string, infants: string): string {
+    const parts: string[] = [];
+    const add = (count: string, singular: string, plural: string) => {
+      const n = Number(count);
+      if (n > 0) parts.push(`${n} ${n === 1 ? singular : plural}`);
+    };
+    add(adults, 'Adult', 'Adults');
+    add(children, 'Child', 'Children');
+    add(infants, 'Infant', 'Infants');
+    return parts.join(', ');
   }
 }
