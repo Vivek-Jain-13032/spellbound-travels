@@ -4,12 +4,15 @@ export type TravelClass = 'Economy' | 'Business' | 'First Class';
 
 export type VisaType = 'Tourist' | 'Business' | 'Student' | 'Work' | 'Transit';
 
+export type PreferredContact = 'Email' | 'Phone' | 'WhatsApp';
+
+export type TripType = 'Leisure' | 'Business' | 'Honeymoon' | 'Family' | 'Group';
+
 export interface FlightDetails {
   from: string;
   to: string;
   departureDate: string;
   returnDate: string;
-  passengers: number;
   travelClass: TravelClass | '';
 }
 
@@ -25,7 +28,11 @@ export interface LeadFormValue {
   email: string;
   phone: string;
   service: ServiceNeeded | '';
+  travelers: string;
+  preferredContact: PreferredContact | '';
+  tripType: TripType | '';
   flight: FlightDetails;
   visa: VisaDetails;
   message: string;
+  consent: boolean;
 }

@@ -1,3 +1,4 @@
+@import 'flatpickr/dist/themes/dark.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -73,4 +74,70 @@ body {
 .goog-text-highlight {
   background: none !important;
   box-shadow: none !important;
+}
+
+/* flatpickr: gold-accent overrides on top of the base dark theme (see
+   date-picker.directive.ts for why a themed calendar replaces the native
+   <input type="date"> popup — that popup is unstylable browser chrome). */
+.flatpickr-calendar {
+  background: #141414;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(201, 168, 76, 0.3);
+  font-family: Lato, sans-serif;
+}
+.flatpickr-months .flatpickr-month,
+.flatpickr-current-month,
+.flatpickr-current-month input.cur-year {
+  background: #141414;
+  color: #f5f5f5;
+}
+.flatpickr-current-month .flatpickr-monthDropdown-months {
+  background: #141414;
+}
+.flatpickr-current-month .flatpickr-monthDropdown-months:hover {
+  background: #1e1e1e;
+}
+.flatpickr-weekdays {
+  background: #141414;
+}
+span.flatpickr-weekday {
+  background: #141414;
+  color: #c9a84c;
+}
+.flatpickr-day {
+  color: #e8e8e8;
+}
+.flatpickr-day.today {
+  border-color: #c9a84c;
+}
+.flatpickr-day.today:hover,
+.flatpickr-day.today:focus {
+  background: #c9a84c;
+  border-color: #c9a84c;
+  color: #0a0a0a;
+}
+.flatpickr-day:hover {
+  background: #262626;
+  border-color: #262626;
+}
+.flatpickr-day.selected,
+.flatpickr-day.selected:hover,
+.flatpickr-day.selected:focus {
+  background: #c9a84c;
+  border-color: #c9a84c;
+  color: #0a0a0a;
+}
+.flatpickr-day.flatpickr-disabled,
+.flatpickr-day.flatpickr-disabled:hover,
+.flatpickr-day.prevMonthDay,
+.flatpickr-day.nextMonthDay {
+  color: #4a4a4a;
+}
+.flatpickr-prev-month svg,
+.flatpickr-next-month svg {
+  fill: #c9a84c;
+}
+.flatpickr-prev-month:hover svg,
+.flatpickr-next-month:hover svg {
+  fill: #e0c476;
 }
