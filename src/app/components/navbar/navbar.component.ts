@@ -102,7 +102,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.nav.scrollToSection(sectionId);
   }
 
-  getAQuote(): void {
+  planYourJourney(): void {
     this.mobileMenuOpen.set(false);
     this.nav.scrollToSection('contact');
   }
