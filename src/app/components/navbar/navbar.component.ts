@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnInit, inject, signal } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, inject, signal } from '@angular/core';
 import { LucideMenu, LucideX, LucideGlobe, LucideChevronDown } from '@lucide/angular';
 import { NavigationService } from '../../services/navigation.service';
 
@@ -26,7 +26,7 @@ declare global {
   imports: [LucideMenu, LucideX, LucideGlobe, LucideChevronDown],
   templateUrl: './navbar.component.html',
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
   protected readonly nav = inject(NavigationService);
   private readonly elementRef = inject(ElementRef<HTMLElement>);
 
@@ -58,9 +58,26 @@ export class NavbarComponent implements OnInit {
     { code: 'ru', label: 'Russian', short: 'RU' },
   ];
 
+  private cookieWatcher?: ReturnType<typeof setInterval>;
+
   ngOnInit(): void {
     this.loadGoogleTranslate();
     this.currentLanguage.set(this.readLanguageFromCookie());
+
+    // Google's own "Translated to: X / Show original" banner can change or
+    // clear the translation without reloading the page, so our pill would
+    // otherwise go stale. There's no native cookie-change event, so a
+    // lightweight poll is the standard way to detect it.
+    this.cookieWatcher = setInterval(() => {
+      const detected = this.readLanguageFromCookie();
+      if (detected !== this.currentLanguage()) {
+        this.currentLanguage.set(detected);
+      }
+    }, 1000);
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.cookieWatcher);
   }
 
   @HostListener('window:scroll')

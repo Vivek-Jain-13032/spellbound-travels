@@ -47,12 +47,22 @@
   top: -9999px;
 }
 
-.goog-te-banner-frame.skiptranslate {
+/* Bug fix: this previously required BOTH classes on the same element
+   (".goog-te-banner-frame.skiptranslate"), which never matched — Google's
+   banner iframe only carries .goog-te-banner-frame, so the rule silently
+   did nothing and the banner rendered on top of the navbar. */
+.goog-te-banner-frame,
+iframe.goog-te-banner-frame {
   display: none !important;
+  visibility: hidden !important;
 }
 
+/* Google's script sets this inline (via injected <style>) to push page
+   content down and make room for the banner above. Since the banner is
+   hidden, cancel that offset so nothing leaves a gap or gets covered. */
 body {
   top: 0 !important;
+  position: static !important;
 }
 
 .goog-tooltip,
