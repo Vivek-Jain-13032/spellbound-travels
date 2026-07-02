@@ -1,10 +1,14 @@
 import { Component, ElementRef, HostListener, Input, forwardRef, inject, signal } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { LucideChevronDown } from '@lucide/angular';
+import { LucideChevronDown, LucidePlane, LucideIdCard } from '@lucide/angular';
+
+export type SelectOptionIcon = 'plane' | 'id-card';
 
 export interface SelectOption {
   value: string;
   label: string;
+  /** Optional icons shown before the label — e.g. ['plane', 'id-card'] for a combined option. */
+  icons?: SelectOptionIcon[];
 }
 
 /**
@@ -17,7 +21,7 @@ export interface SelectOption {
 @Component({
   selector: 'app-select',
   standalone: true,
-  imports: [LucideChevronDown],
+  imports: [LucideChevronDown, LucidePlane, LucideIdCard],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -41,7 +45,15 @@ export interface SelectOption {
         [attr.aria-expanded]="open()"
         [attr.aria-label]="ariaLabel || null"
       >
-        <span>{{ selectedLabel() }}</span>
+        <span class="flex items-center gap-2 min-w-0">
+          @for (icon of selectedOption()?.icons ?? []; track icon) {
+            @switch (icon) {
+              @case ('plane') { <svg lucidePlane class="w-4 h-4 text-sb-gold flex-shrink-0"></svg> }
+              @case ('id-card') { <svg lucideIdCard class="w-4 h-4 text-sb-gold flex-shrink-0"></svg> }
+            }
+          }
+          <span class="truncate">{{ selectedOption()?.label ?? placeholder }}</span>
+        </span>
         <svg lucideChevronDown class="w-3.5 h-3.5 text-[#888] flex-shrink-0 ml-2"></svg>
       </button>
 
@@ -58,9 +70,15 @@ export interface SelectOption {
                 role="option"
                 [attr.aria-selected]="value === opt.value"
                 (click)="select(opt)"
-                class="w-full text-left px-4 py-2.5 font-body text-[15px] text-[#d8d8d8] hover:bg-[#1e1e1e] hover:text-sb-gold transition-colors cursor-pointer"
+                class="w-full flex items-center gap-2 text-left px-4 py-2.5 font-body text-[15px] text-[#d8d8d8] hover:bg-[#1e1e1e] hover:text-sb-gold transition-colors cursor-pointer"
                 [class.text-sb-gold]="value === opt.value"
               >
+                @for (icon of opt.icons ?? []; track icon) {
+                  @switch (icon) {
+                    @case ('plane') { <svg lucidePlane class="w-4 h-4 flex-shrink-0"></svg> }
+                    @case ('id-card') { <svg lucideIdCard class="w-4 h-4 flex-shrink-0"></svg> }
+                  }
+                }
                 {{ opt.label }}
               </button>
             </li>
@@ -102,8 +120,8 @@ export class SelectComponent implements ControlValueAccessor {
     this.disabled = isDisabled;
   }
 
-  selectedLabel(): string {
-    return this.options.find((o) => o.value === this.value)?.label ?? this.placeholder;
+  selectedOption(): SelectOption | undefined {
+    return this.options.find((o) => o.value === this.value);
   }
 
   toggle(): void {

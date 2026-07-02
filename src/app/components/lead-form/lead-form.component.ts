@@ -29,9 +29,9 @@ export class LeadFormComponent implements OnInit, OnDestroy {
   readonly messageMaxLength = MESSAGE_MAX_LENGTH;
 
   readonly serviceOptions: SelectOption[] = [
-    { value: 'Flight', label: '✈️ Flight Booking' },
-    { value: 'Visa', label: '🛂 Visa Assistance' },
-    { value: 'Both', label: '✈️🛂 Both' },
+    { value: 'Flight', label: 'Flight Booking', icons: ['plane'] },
+    { value: 'Visa', label: 'Visa Assistance', icons: ['id-card'] },
+    { value: 'Both', label: 'Both', icons: ['plane', 'id-card'] },
   ];
   readonly travelerOptions: SelectOption[] = Array.from({ length: 9 }, (_, i) => ({
     value: String(i + 1),
