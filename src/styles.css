@@ -29,30 +29,30 @@
 }
 
 /*
-  Google Translate widget: its own DOM/CSS is unreliable to re-skin directly
-  — it can render different layouts, swap in a native <select> fallback, or
-  reparent nodes, and fighting its class names broke on every attempt. So
-  instead of trying to restyle Google's markup, #google_translate_element
-  (see navbar.component.html) is made fully invisible (opacity: 0) but still
-  interactive, stretched over our own decorative pill — whatever Google
-  actually renders inside becomes an invisible click/keyboard target on top
-  of a design we fully control. Only the widget's page-level side effects
-  (banner iframe, translated-text highlight box) need hiding here.
+  Google Translate: its language picker is a native <select> in every layout
+  — an OS/browser-level popup no site's CSS can restyle. Rather than fight
+  that, #google_translate_element (see navbar.component.html) is kept
+  entirely off-screen but present in the DOM (Google's script needs it to
+  exist and have real dimensions to initialize); our own dropdown menu in
+  the navbar drives it programmatically instead. Only the widget's
+  page-level side effects (banner iframe, translated-text highlight box)
+  need hiding here.
 */
+#google_translate_element {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  left: -9999px;
+  top: -9999px;
+}
+
 .goog-te-banner-frame.skiptranslate {
   display: none !important;
 }
 
 body {
   top: 0 !important;
-}
-
-/* Whatever Google injects directly inside the container should fill it, so
-   the entire pill area stays clickable regardless of the exact markup. */
-#google_translate_element > * {
-  width: 100% !important;
-  height: 100% !important;
-  cursor: pointer !important;
 }
 
 .goog-tooltip,

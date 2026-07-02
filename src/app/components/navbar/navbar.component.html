@@ -27,17 +27,49 @@
   <!-- Right side: translate + CTA (desktop), globe + hamburger (mobile) -->
   <div class="flex items-center gap-3 md:gap-[18px]">
     <!--
-      Google Translate's own DOM/CSS is unreliable to re-skin directly (it can
-      swap layouts or reparent its <select> outside expectations). Instead,
-      this pill is entirely our own markup; the real widget is stretched
-      invisibly on top so it stays fully clickable/keyboard-accessible while
-      only our design is ever visible.
+      Google Translate's own popup can't be restyled by any site — the
+      language list is a native <select>, an OS/browser-level control no CSS
+      can reach. So the widget itself stays fully hidden (see styles.css),
+      and this is our own dropdown menu instead; picking a language calls
+      into the hidden widget's <select> programmatically (see
+      navbar.component.ts, applyTranslation()).
     -->
-    <div class="relative hidden md:flex items-center gap-1.5 border border-[#2f2f2f] hover:border-sb-gold rounded-full px-3 py-1.5 transition-colors min-w-[64px] min-h-[30px] overflow-hidden">
-      <svg lucideGlobe class="w-4 h-4 text-sb-gold pointer-events-none"></svg>
-      <span class="font-body text-xs text-[#cfcfcf] pointer-events-none">EN</span>
-      <svg lucideChevronDown class="w-[11px] h-[11px] text-[#888] pointer-events-none"></svg>
-      <div id="google_translate_element" role="group" aria-label="Select language" class="absolute inset-0 opacity-0 cursor-pointer"></div>
+    <div class="relative hidden md:block">
+      <button
+        type="button"
+        (click)="toggleLanguageMenu()"
+        class="flex items-center gap-1.5 border border-[#2f2f2f] hover:border-sb-gold rounded-full px-3 py-1.5 cursor-pointer transition-colors min-w-[64px] min-h-[30px]"
+        aria-haspopup="listbox"
+        [attr.aria-expanded]="languageMenuOpen()"
+        aria-label="Select language"
+      >
+        <svg lucideGlobe class="w-4 h-4 text-sb-gold"></svg>
+        <span class="font-body text-xs text-[#cfcfcf]">{{ currentLanguage() }}</span>
+        <svg lucideChevronDown class="w-[11px] h-[11px] text-[#888]"></svg>
+      </button>
+
+      @if (languageMenuOpen()) {
+        <ul
+          role="listbox"
+          aria-label="Choose a language"
+          class="absolute right-0 top-full mt-2 w-52 max-h-80 overflow-y-auto bg-[#141414] border border-sb-gold/30 rounded-md shadow-2xl py-2 z-50"
+        >
+          @for (language of languages; track language.code) {
+            <li role="presentation">
+              <button
+                type="button"
+                role="option"
+                [attr.aria-selected]="currentLanguage() === language.short"
+                (click)="selectLanguage(language)"
+                class="w-full text-left px-4 py-2 font-body text-sm text-[#d8d8d8] hover:bg-[#1e1e1e] hover:text-sb-gold transition-colors cursor-pointer"
+                [class.text-sb-gold]="currentLanguage() === language.short"
+              >
+                {{ language.label }}
+              </button>
+            </li>
+          }
+        </ul>
+      }
     </div>
 
     <button
@@ -48,12 +80,49 @@
       Get a Quote
     </button>
 
-    <svg lucideGlobe class="md:hidden text-sb-gold w-[19px] h-[19px]"></svg>
+    <div class="relative md:hidden">
+      <button
+        type="button"
+        (click)="toggleLanguageMenu()"
+        class="text-sb-gold"
+        aria-haspopup="listbox"
+        [attr.aria-expanded]="languageMenuOpen()"
+        aria-label="Select language"
+      >
+        <svg lucideGlobe class="w-[19px] h-[19px]"></svg>
+      </button>
+
+      @if (languageMenuOpen()) {
+        <ul
+          role="listbox"
+          aria-label="Choose a language"
+          class="absolute right-0 top-full mt-2 w-48 max-h-72 overflow-y-auto bg-[#141414] border border-sb-gold/30 rounded-md shadow-2xl py-2 z-50"
+        >
+          @for (language of languages; track language.code) {
+            <li role="presentation">
+              <button
+                type="button"
+                role="option"
+                [attr.aria-selected]="currentLanguage() === language.short"
+                (click)="selectLanguage(language)"
+                class="w-full text-left px-4 py-2 font-body text-sm text-[#d8d8d8] hover:bg-[#1e1e1e] hover:text-sb-gold transition-colors cursor-pointer"
+                [class.text-sb-gold]="currentLanguage() === language.short"
+              >
+                {{ language.label }}
+              </button>
+            </li>
+          }
+        </ul>
+      }
+    </div>
 
     <button type="button" (click)="toggleMobileMenu()" class="md:hidden text-white" aria-label="Open menu" [attr.aria-expanded]="mobileMenuOpen()">
       <svg lucideMenu class="w-[26px] h-[26px]"></svg>
     </button>
   </div>
+
+  <!-- Headless driver for Google's translation engine — never shown, see styles.css -->
+  <div id="google_translate_element"></div>
 </nav>
 
 <!-- Mobile full-screen menu -->
