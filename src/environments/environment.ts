@@ -6,9 +6,9 @@ export const environment = {
   // "Configure EmailJS" section), then paste the IDs below.
   emailjsServiceId: 'service_m3v00ty',
   // Template sent to the Spellbound Travels inbox with the lead's details.
-  emailjsTemplateId: 'template_yqiwl7l',
+  emailjsTemplateId: 'template_a488anh',
   // Template sent back to the enquirer confirming receipt.
-  emailjsUserTemplateId: 'YOUR_USER_TEMPLATE_ID',
+  emailjsUserTemplateId: 'template_4jp5q0f',
   emailjsPublicKey: 'MJCcpqmUrl2a2jq6-',
 
   contact: {
