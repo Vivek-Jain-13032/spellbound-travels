@@ -109,7 +109,7 @@ Two photo placeholders (gold-lit striped pattern + icon) are wired up as CSS bac
 | `about-portrait.jpg` | About section portrait of Nimit, founder |
 | `og-image.jpg` | Social share preview image (1200×630px recommended) |
 
-Also replace `public/favicon.ico` with a branded favicon when ready.
+The favicon is already branded — a gold "S" monogram on black, matching the site (`public/favicon.svg` is the source; `favicon.ico`/`favicon-16x16.png`/`favicon-32x32.png`/`apple-touch-icon.png`/`android-chrome-*.png` are pre-rendered from it for older browsers, iOS home screen, and Android/PWA icons — see `site.webmanifest`). To change the mark itself, edit `favicon.svg` and re-render the PNG/ICO sizes from it (any SVG-to-PNG tool works; sizes needed are 16, 32, 180, 192, 512px, plus a multi-resolution `favicon.ico` bundling the 16/32/48px renders).
 
 ## Deploy to Netlify / Vercel
 
