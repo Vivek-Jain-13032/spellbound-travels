@@ -1,4 +1,5 @@
 @import 'flatpickr/dist/themes/dark.css';
+@import 'intl-tel-input/styles';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -140,4 +141,89 @@ span.flatpickr-weekday {
 .flatpickr-prev-month:hover svg,
 .flatpickr-next-month:hover svg {
   fill: #e0c476;
+}
+
+/* intl-tel-input: dark/gold theme, matching the flatpickr override above
+   and for the same reason — a native <select> country list is unstylable
+   browser chrome (see PhoneInputDirective). Most of the surface area is
+   covered by the library's own CSS custom properties; a few remaining
+   hardcoded colors (border/shadow/text) need explicit overrides. */
+.iti {
+  width: 100%;
+  --iti-hover-color: rgba(201, 168, 76, 0.12);
+  --iti-border-color: rgba(201, 168, 76, 0.3);
+  --iti-country-selector-bg: #141414;
+  --iti-icon-color: #8a8a8a;
+}
+.iti__selected-country-primary {
+  color: #f5f5f5;
+}
+.iti__selected-dial-code {
+  color: #c9a84c;
+  font-weight: 700;
+}
+.iti__country-selector {
+  border: 1px solid rgba(201, 168, 76, 0.3);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  font-family: Lato, sans-serif;
+}
+/* The library's own CSS uses native nesting (&) for these three rules,
+   which Angular's CSS bundler doesn't parse — see the "selector errors"
+   build warning. Restated as plain selectors so they actually apply. */
+.iti--detached-country-selector:hover {
+  cursor: pointer;
+}
+.iti--fullscreen-popup.iti--detached-country-selector {
+  background-color: rgba(0, 0, 0, 0.6);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: fixed;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.iti--fullscreen-popup .iti__country-selector {
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  position: relative;
+}
+.iti--fullscreen-popup .iti__country,
+.iti--fullscreen-popup .iti__search-input {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.iti--fullscreen-popup .iti__country {
+  padding-left: 10px;
+  padding-right: 10px;
+  line-height: 1.5em;
+}
+.iti__search-input {
+  background: #141414;
+  color: #f5f5f5;
+}
+.iti__search-input::placeholder {
+  color: #6b6b6b;
+}
+.iti__search-input-wrapper {
+  border-bottom-color: rgba(201, 168, 76, 0.3);
+}
+.iti__country-list {
+  background: #141414;
+}
+.iti__country {
+  color: #e8e8e8;
+}
+.iti__country.iti__highlight {
+  color: #f5f5f5;
+  background-color: rgba(201, 168, 76, 0.12);
+}
+.iti__country-check {
+  color: #c9a84c;
+}
+.iti__no-results {
+  color: #8a8a8a;
 }

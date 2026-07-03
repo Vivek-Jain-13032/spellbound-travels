@@ -5,12 +5,12 @@ import { LucideCheck, LucideLoaderCircle, LucideLock } from '@lucide/angular';
 import { NavigationService } from '../../services/navigation.service';
 import { EmailService } from '../../services/email.service';
 import { ToastService } from '../../services/toast.service';
-import { phoneDigitsInRange } from '../../validators/phone.validator';
 import { containsLetter } from '../../validators/name.validator';
 import { dateNotBefore } from '../../validators/date-range.validator';
 import { LeadFormValue, ServiceNeeded } from '../../models/lead-form.model';
 import { SelectComponent, SelectOption } from '../shared/select.component';
 import { DatePickerDirective } from '../../directives/date-picker.directive';
+import { PhoneInputDirective } from '../../directives/phone-input.directive';
 
 const MESSAGE_MAX_LENGTH = 1000;
 
@@ -20,7 +20,15 @@ const numberOptions = (count: number, start = 0): SelectOption[] =>
 @Component({
   selector: 'app-lead-form',
   standalone: true,
-  imports: [ReactiveFormsModule, LucideCheck, LucideLoaderCircle, LucideLock, SelectComponent, DatePickerDirective],
+  imports: [
+    ReactiveFormsModule,
+    LucideCheck,
+    LucideLoaderCircle,
+    LucideLock,
+    SelectComponent,
+    DatePickerDirective,
+    PhoneInputDirective,
+  ],
   templateUrl: './lead-form.component.html',
 })
 export class LeadFormComponent implements OnInit, OnDestroy {
@@ -65,7 +73,7 @@ export class LeadFormComponent implements OnInit, OnDestroy {
   readonly form = this.fb.nonNullable.group({
     fullName: ['', [Validators.required, Validators.minLength(2), containsLetter()]],
     email: ['', [Validators.required, Validators.email]],
-    phone: ['', [Validators.required, phoneDigitsInRange(10)]],
+    phone: ['', Validators.required],
     service: ['' as ServiceNeeded | '', Validators.required],
     adults: ['1', Validators.required],
     children: ['0', Validators.required],

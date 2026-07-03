@@ -46,13 +46,14 @@
         id="phone"
         type="tel"
         formControlName="phone"
-        placeholder="e.g. +91 98765 43210"
+        appPhoneInput
+        placeholder="98765 43210"
         class="w-full box-border bg-[#141414] border rounded-sm text-white px-4 py-3.5 font-body text-[15px] outline-none transition-colors focus:border-sb-gold hover:border-[#3d3d3d]"
         [class.border-red-500]="isInvalid('phone')"
         [class.border-[#2a2a2a]]="!isInvalid('phone')"
       />
       @if (isInvalid('phone')) {
-        <p class="text-red-400 text-xs mt-1.5">Enter a valid phone number (10–15 digits).</p>
+        <p class="text-red-400 text-xs mt-1.5">Enter a valid phone number.</p>
       }
     </div>
 

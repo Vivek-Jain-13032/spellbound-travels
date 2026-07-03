@@ -20,6 +20,7 @@
     "@emailjs/browser": "^4.4.1",
     "@lucide/angular": "^1.22.0",
     "flatpickr": "^4.6.13",
+    "intl-tel-input": "^29.1.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
