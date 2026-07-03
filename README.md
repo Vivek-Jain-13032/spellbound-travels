@@ -129,6 +129,24 @@ Both platforms deploy static Angular builds directly from Git.
 
 In both cases, set the production EmailJS values in `src/environments/environment.prod.ts` **before** building (there's no server at runtime to supply them from elsewhere, since this is a static, backend-free site).
 
+### Connect the GoDaddy domain (spellboundtravels.co.in)
+
+1. Deploy to Netlify or Vercel first (above) — you'll get a temporary `*.netlify.app` / `*.vercel.app` URL.
+2. In that platform's dashboard, add `spellboundtravels.co.in` (and `www.spellboundtravels.co.in`) as a custom domain. It'll show you the DNS records to add.
+3. In GoDaddy → **My Products → DNS** for the domain, add those records (typically an `A`/`ALIAS` record on the root `@` and a `CNAME` on `www` pointing at the platform). Remove any GoDaddy "parked page" A records first.
+4. DNS propagation takes anywhere from a few minutes to ~24 hours. Both Netlify and Vercel auto-provision a free HTTPS certificate once DNS resolves — no separate SSL purchase needed.
+5. Pick one of `spellboundtravels.co.in` / `www.spellboundtravels.co.in` as canonical (this repo assumes the non-`www` root) and let the platform redirect the other to it, so Google doesn't see two copies of the same site.
+
+### Get found on Google
+
+Going live doesn't make the site appear in search results by itself — a few one-time steps matter:
+
+1. **Google Search Console** (search.google.com/search-console) — add the domain as a property, verify ownership (DNS TXT record via GoDaddy, or paste the `google-site-verification` meta tag GSC gives you into `src/index.html`, already stubbed in as a comment), then submit `https://spellboundtravels.co.in/sitemap.xml`.
+2. **Google Business Profile** (business.google.com) — matters more than organic ranking for "travel agency near me"-style searches. Requires a physical or service-area address (not currently collected anywhere in this site's content).
+3. The site already ships `public/robots.txt` (allows all crawling, points at the sitemap), `public/sitemap.xml` (single-page site, one URL), and JSON-LD structured data in `index.html` (`@type: TravelAgency`) so Google can identify the business, phone number, and service area directly from the page.
+4. This is a client-rendered Angular SPA (no server-side rendering) — Googlebot can execute JavaScript and index it, but on a two-step "crawl now, render later" delay. Indexing after submission typically takes a few days to a couple of weeks; ranking for competitive terms takes much longer and depends on ongoing content/reviews/backlinks, not just being online.
+5. If you swap in real values, update the domain-dependent bits in `src/index.html` (canonical link, OG/Twitter URLs, JSON-LD `url`/`logo`/`image`), `public/robots.txt`, and `public/sitemap.xml` to match — they're currently hardcoded to `https://spellboundtravels.co.in`.
+
 ## Notes
 
 - This is intentionally a single scrolling page with no Angular Router — "Home / Services / About / Contact" are anchor sections (`#home`, `#services`, `#about`, `#contact`), not separate routes.
