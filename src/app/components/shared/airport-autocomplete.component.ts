@@ -145,6 +145,7 @@ export class AirportAutocompleteComponent implements ControlValueAccessor {
     this.onChange(this.value);
     this.open.set(false);
     this.results.set([]);
+    this.activeIndex.set(-1);
   }
 
   onBlur(): void {

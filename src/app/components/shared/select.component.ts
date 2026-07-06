@@ -159,7 +159,18 @@ export class SelectComponent implements ControlValueAccessor {
   filteredOptions(): SelectOption[] {
     if (!this.searchable || !this.query.trim()) return this.options;
     const q = this.query.trim().toLowerCase();
-    return this.options.filter((o) => o.label.toLowerCase().includes(q));
+
+    // Rank labels starting with the query above ones that merely contain it
+    // elsewhere — otherwise e.g. searching "ind" for a country surfaces
+    // "British Indian Ocean Territory" ahead of "India".
+    const startsWith: SelectOption[] = [];
+    const contains: SelectOption[] = [];
+    for (const opt of this.options) {
+      const label = opt.label.toLowerCase();
+      if (label.startsWith(q)) startsWith.push(opt);
+      else if (label.includes(q)) contains.push(opt);
+    }
+    return [...startsWith, ...contains];
   }
 
   toggle(): void {
