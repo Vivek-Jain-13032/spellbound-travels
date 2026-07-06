@@ -247,16 +247,28 @@
       <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-5 border-l-2 border-sb-gold pl-5" formGroupName="visa">
         <div>
           <label for="nationality" class="block font-body text-[10.5px] tracking-[0.16em] uppercase text-sb-gold mb-[9px] font-bold">Nationality</label>
-          <input id="nationality" type="text" formControlName="nationality" placeholder="e.g. Indian"
-            class="w-full box-border bg-[#141414] border rounded-sm text-white px-4 py-3.5 font-body text-[15px] outline-none transition-colors focus:border-sb-gold hover:border-[#3d3d3d]"
-            [class.border-red-500]="isInvalid('visa.nationality')" [class.border-[#2a2a2a]]="!isInvalid('visa.nationality')" />
+          <app-select
+            id="nationality"
+            formControlName="nationality"
+            [options]="countryOptions"
+            searchable
+            placeholder="Select your country…"
+            ariaLabel="Nationality"
+            [invalid]="isInvalid('visa.nationality')"
+          ></app-select>
           @if (isInvalid('visa.nationality')) { <p class="text-red-400 text-xs mt-1.5">Nationality is required.</p> }
         </div>
         <div>
           <label for="destinationCountry" class="block font-body text-[10.5px] tracking-[0.16em] uppercase text-sb-gold mb-[9px] font-bold">Destination Country</label>
-          <input id="destinationCountry" type="text" formControlName="destinationCountry" placeholder="e.g. Japan"
-            class="w-full box-border bg-[#141414] border rounded-sm text-white px-4 py-3.5 font-body text-[15px] outline-none transition-colors focus:border-sb-gold hover:border-[#3d3d3d]"
-            [class.border-red-500]="isInvalid('visa.destinationCountry')" [class.border-[#2a2a2a]]="!isInvalid('visa.destinationCountry')" />
+          <app-select
+            id="destinationCountry"
+            formControlName="destinationCountry"
+            [options]="countryOptions"
+            searchable
+            placeholder="Select destination country…"
+            ariaLabel="Destination Country"
+            [invalid]="isInvalid('visa.destinationCountry')"
+          ></app-select>
           @if (isInvalid('visa.destinationCountry')) { <p class="text-red-400 text-xs mt-1.5">Destination country is required.</p> }
         </div>
         <div>
