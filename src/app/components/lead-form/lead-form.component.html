@@ -170,16 +170,14 @@
         </div>
         <div>
           <label for="from" class="block font-body text-[10.5px] tracking-[0.16em] uppercase text-sb-gold mb-[9px] font-bold">Flying From</label>
-          <input id="from" type="text" formControlName="from" placeholder="City or airport"
-            class="w-full box-border bg-[#141414] border rounded-sm text-white px-4 py-3.5 font-body text-[15px] outline-none transition-colors focus:border-sb-gold hover:border-[#3d3d3d]"
-            [class.border-red-500]="isInvalid('flight.from')" [class.border-[#2a2a2a]]="!isInvalid('flight.from')" />
+          <app-airport-autocomplete id="from" formControlName="from" placeholder="City or airport"
+            [invalid]="isInvalid('flight.from')" />
           @if (isInvalid('flight.from')) { <p class="text-red-400 text-xs mt-1.5">Departure city is required.</p> }
         </div>
         <div>
           <label for="to" class="block font-body text-[10.5px] tracking-[0.16em] uppercase text-sb-gold mb-[9px] font-bold">Flying To</label>
-          <input id="to" type="text" formControlName="to" placeholder="City or airport"
-            class="w-full box-border bg-[#141414] border rounded-sm text-white px-4 py-3.5 font-body text-[15px] outline-none transition-colors focus:border-sb-gold hover:border-[#3d3d3d]"
-            [class.border-red-500]="isInvalid('flight.to')" [class.border-[#2a2a2a]]="!isInvalid('flight.to')" />
+          <app-airport-autocomplete id="to" formControlName="to" placeholder="City or airport"
+            [invalid]="isInvalid('flight.to')" />
           @if (isInvalid('flight.to')) { <p class="text-red-400 text-xs mt-1.5">Destination city is required.</p> }
         </div>
         <div>

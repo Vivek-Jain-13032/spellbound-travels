@@ -34,15 +34,20 @@ src/
 │   │   ├── footer/              Links, contact, social
 │   │   ├── floating-buttons/   WhatsApp + Call buttons
 │   │   └── shared/              Toast + social-icon components used across the app
+│   ├── data/
+│   │   └── airports.json          ~5,600 airports (IATA/name/city/country), lazy-loaded
 │   ├── directives/
 │   │   ├── reveal-on-scroll.directive.ts   Fade-in-up on first scroll into view
-│   │   └── scroll-spy.directive.ts         Drives navbar active-link highlighting
+│   │   ├── scroll-spy.directive.ts         Drives navbar active-link highlighting
+│   │   ├── date-picker.directive.ts        flatpickr CVA wrapper
+│   │   └── phone-input.directive.ts        intl-tel-input CVA wrapper
 │   ├── models/
 │   │   └── lead-form.model.ts
 │   ├── services/
 │   │   ├── email.service.ts       EmailJS integration
 │   │   ├── navigation.service.ts  Smooth-scroll + "Enquire Now" pre-select hand-off
-│   │   └── toast.service.ts       Success/error toast state
+│   │   ├── toast.service.ts       Success/error toast state
+│   │   └── airport.service.ts     Airport search backing the Flying From/To autocomplete
 │   ├── utils/
 │   │   └── google-translate-dom-patch.ts
 │   ├── app.component.ts            Assembles all sections
@@ -154,4 +159,5 @@ Going live doesn't make the site appear in search results by itself — a few on
 - Image loading: the About portrait is a real `<img loading="lazy">` (it's below the fold, so deferring it helps). The hero photo is intentionally a CSS background rather than a lazy `<img>` — it's the largest above-the-fold element (LCP candidate), so lazy-loading it would hurt, not help, load performance. Both gracefully show a placeholder pattern until a real photo is dropped in.
 - Accessibility: audited with axe-core against every major UI state (default, mobile menu open, conditional form fields, validation errors shown) — zero violations. `tsconfig.json` also enables `noUnusedLocals`/`noUnusedParameters` to keep the codebase free of dead code.
 - Lead form dropdowns, date fields, and the phone field use custom components/directives (`src/app/components/shared/select.component.ts`, `src/app/directives/date-picker.directive.ts`, `src/app/directives/phone-input.directive.ts`) instead of native `<select>`/`<input type="date">`/a plain `<input type="tel">`, because an open select's option list, a date input's calendar popup, and a country-code picker are all either native browser/OS chrome no site's CSS can restyle, or (for phone) simply not something a plain input can offer. The date picker wraps [flatpickr](https://flatpickr.js.org); the phone field wraps [intl-tel-input](https://intl-tel-input.com) (searchable country list, flag + dial code prefix, libphonenumber-backed validation, full E.164 value) — both themed dark/gold in `styles.css`. The select is hand-built as a `ControlValueAccessor` so all three work as drop-in replacements with `formControlName`. Note: `intl-tel-input`'s stock CSS uses native CSS nesting (`&`) for a handful of rules that Angular's CSS bundler doesn't parse (see the "selector errors" build warning) — the affected rules (country-row hover highlight, mobile fullscreen popup layout) are restated as plain selectors in `styles.css` immediately after the theme overrides, so nothing is actually missing at runtime.
+- The Flying From/To fields (`src/app/components/shared/airport-autocomplete.component.ts`) are a freeform text input with a live suggestions dropdown, backed by `src/app/services/airport.service.ts` and `src/app/data/airports.json` (~5,600 airports with an IATA code, trimmed from OpenFlights' public-domain airport database — full name/city/country dropped down to just those four fields to keep it small). Matches by IATA code, city, airport name, or country. The dataset is dynamically imported on first focus rather than bundled upfront (it shows up as its own `airports-json` lazy chunk, same treatment as the phone field's libphonenumber utils), so it doesn't cost anything until someone actually opens the flight fields. Picking a suggestion fills in a canonical `"City (IATA)"` value, but typing a value that isn't in the list and never selecting a suggestion is still accepted — same as the plain text field it replaces, this isn't validated against the airport list.
 - The form has a honeypot field (`website`, visually hidden via `styles.css`, not `display:none`) — real users never see or fill it; if it has a value on submit, the app shows the normal success state but skips the actual EmailJS call, so spam bots get no signal they were caught and no email ever sends.

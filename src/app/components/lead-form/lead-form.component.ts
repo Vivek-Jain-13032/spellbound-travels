@@ -11,6 +11,7 @@ import { LeadFormValue, ServiceNeeded } from '../../models/lead-form.model';
 import { SelectComponent, SelectOption } from '../shared/select.component';
 import { DatePickerDirective } from '../../directives/date-picker.directive';
 import { PhoneInputDirective } from '../../directives/phone-input.directive';
+import { AirportAutocompleteComponent } from '../shared/airport-autocomplete.component';
 
 const MESSAGE_MAX_LENGTH = 1000;
 
@@ -28,6 +29,7 @@ const numberOptions = (count: number, start = 0): SelectOption[] =>
     SelectComponent,
     DatePickerDirective,
     PhoneInputDirective,
+    AirportAutocompleteComponent,
   ],
   templateUrl: './lead-form.component.html',
 })
