@@ -5,6 +5,7 @@ import { LucideCheck, LucideLoaderCircle, LucideLock } from '@lucide/angular';
 import { NavigationService } from '../../services/navigation.service';
 import { EmailService } from '../../services/email.service';
 import { ToastService } from '../../services/toast.service';
+import { CountryService } from '../../services/country.service';
 import { containsLetter } from '../../validators/name.validator';
 import { dateNotBefore } from '../../validators/date-range.validator';
 import { LeadFormValue, ServiceNeeded } from '../../models/lead-form.model';
@@ -38,8 +39,13 @@ export class LeadFormComponent implements OnInit, OnDestroy {
   private readonly nav = inject(NavigationService);
   private readonly emailService = inject(EmailService);
   private readonly toast = inject(ToastService);
+  private readonly countryService = inject(CountryService);
 
   readonly messageMaxLength = MESSAGE_MAX_LENGTH;
+
+  readonly countryOptions: SelectOption[] = this.countryService
+    .getCountryNames()
+    .map((name) => ({ value: name, label: name }));
 
   readonly serviceOptions: SelectOption[] = [
     { value: 'Flight', label: 'Flight Booking', icons: ['plane'] },
