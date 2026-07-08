@@ -3,6 +3,7 @@ import {
   ElementRef,
   HostListener,
   Input,
+  OnDestroy,
   forwardRef,
   inject,
   signal,
@@ -84,7 +85,7 @@ let nextId = 0;
     </div>
   `,
 })
-export class AirportAutocompleteComponent implements ControlValueAccessor {
+export class AirportAutocompleteComponent implements ControlValueAccessor, OnDestroy {
   private readonly airportService = inject(AirportService);
   private readonly elementRef = inject(ElementRef<HTMLElement>);
 
@@ -103,6 +104,7 @@ export class AirportAutocompleteComponent implements ControlValueAccessor {
   private onChange: (value: string) => void = () => {};
   private onTouched: () => void = () => {};
   private searchToken = 0;
+  private searchTimeout?: ReturnType<typeof window.setTimeout>;
 
   writeValue(value: string): void {
     this.value = value ?? '';
@@ -132,15 +134,27 @@ export class AirportAutocompleteComponent implements ControlValueAccessor {
     this.onChange(query);
     this.activeIndex.set(-1);
 
+    const trimmed = query.trim();
+    if (trimmed.length < 2) {
+      clearTimeout(this.searchTimeout);
+      this.results.set([]);
+      this.open.set(false);
+      return;
+    }
+
     const token = ++this.searchToken;
-    this.airportService.search(query).then((matches) => {
-      if (token !== this.searchToken) return; // a newer keystroke already superseded this lookup
-      this.results.set(matches);
-      this.open.set(matches.length > 0);
-    });
+    clearTimeout(this.searchTimeout);
+    this.searchTimeout = window.setTimeout(() => {
+      void this.airportService.search(trimmed).then((matches) => {
+        if (token !== this.searchToken) return; // a newer keystroke already superseded this lookup
+        this.results.set(matches);
+        this.open.set(matches.length > 0);
+      });
+    }, 180);
   }
 
   select(airport: Airport): void {
+    clearTimeout(this.searchTimeout);
     this.value = `${airport.city} (${airport.iata})`;
     this.onChange(this.value);
     this.open.set(false);
@@ -151,6 +165,10 @@ export class AirportAutocompleteComponent implements ControlValueAccessor {
   onBlur(): void {
     this.open.set(false);
     this.onTouched();
+  }
+
+  ngOnDestroy(): void {
+    clearTimeout(this.searchTimeout);
   }
 
   onKeydown(event: KeyboardEvent): void {
