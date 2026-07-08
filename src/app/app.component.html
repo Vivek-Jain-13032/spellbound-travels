@@ -2,11 +2,10 @@
 
 <main>
   <app-hero></app-hero>
-  <app-trust-bar></app-trust-bar>
-  <app-services></app-services>
-  <app-why-choose-us></app-why-choose-us>
-  <app-about></app-about>
 
+  <!-- Lead-capture form moved up front (right after the hero) so it's the
+       first thing a visitor can interact with, rather than the last
+       section after several scrolls. -->
   <section id="contact" appScrollSpy class="relative bg-sb-black px-6 py-16 md:px-[60px] md:py-24 scroll-mt-16 md:scroll-mt-[73px] overflow-hidden">
     <div class="absolute inset-0 bg-[radial-gradient(80%_60%_at_50%_0%,rgba(201,168,76,0.08),transparent_60%)]"></div>
 
@@ -22,6 +21,12 @@
       </div>
     </div>
   </section>
+
+  <app-trust-bar></app-trust-bar>
+  <app-services></app-services>
+  <app-why-choose-us></app-why-choose-us>
+  <!-- About section temporarily disabled — re-enable by uncommenting. -->
+  <!-- <app-about></app-about> -->
 </main>
 
 <app-footer></app-footer>

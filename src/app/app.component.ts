@@ -4,7 +4,8 @@ import { HeroComponent } from './components/hero/hero.component';
 import { TrustBarComponent } from './components/trust-bar/trust-bar.component';
 import { ServicesComponent } from './components/services/services.component';
 import { WhyChooseUsComponent } from './components/why-choose-us/why-choose-us.component';
-import { AboutComponent } from './components/about/about.component';
+// About section temporarily disabled — see app.component.html.
+// import { AboutComponent } from './components/about/about.component';
 import { LeadFormComponent } from './components/lead-form/lead-form.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { FloatingButtonsComponent } from './components/floating-buttons/floating-buttons.component';
@@ -21,7 +22,7 @@ import { ScrollSpyDirective } from './directives/scroll-spy.directive';
     TrustBarComponent,
     ServicesComponent,
     WhyChooseUsComponent,
-    AboutComponent,
+    // AboutComponent,
     LeadFormComponent,
     FooterComponent,
     FloatingButtonsComponent,

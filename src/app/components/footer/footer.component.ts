@@ -16,7 +16,7 @@ export class FooterComponent {
   readonly links = [
     { id: 'home', label: 'Home' },
     { id: 'services', label: 'Services' },
-    { id: 'about', label: 'About' },
+    // { id: 'about', label: 'About' }, // About section temporarily disabled — see app.component.html
     { id: 'contact', label: 'Contact' },
   ];
 
