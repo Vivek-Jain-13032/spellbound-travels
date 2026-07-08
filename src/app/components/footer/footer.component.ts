@@ -2,11 +2,12 @@ import { Component, inject } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { NavigationService } from '../../services/navigation.service';
 import { SocialIconComponent, SocialPlatform } from '../shared/social-icon.component';
+import { ScrollSpyDirective } from '../../directives/scroll-spy.directive';
 
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [SocialIconComponent],
+  imports: [SocialIconComponent, ScrollSpyDirective],
   templateUrl: './footer.component.html',
 })
 export class FooterComponent {
@@ -17,7 +18,7 @@ export class FooterComponent {
     { id: 'home', label: 'Home' },
     { id: 'services', label: 'Services' },
     // { id: 'about', label: 'About' }, // About section temporarily disabled — see app.component.html
-    { id: 'contact', label: 'Contact' },
+    { id: 'footer', label: 'Contact' }, // Contact now points at the footer's contact details, not the enquiry form
   ];
 
   readonly socials: { platform: SocialPlatform; href: string; label: string }[] = [

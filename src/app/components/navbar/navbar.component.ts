@@ -39,7 +39,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     { id: 'home', label: 'Home' },
     { id: 'services', label: 'Services' },
     // { id: 'about', label: 'About' }, // About section temporarily disabled — see app.component.html
-    { id: 'contact', label: 'Contact' },
+    { id: 'footer', label: 'Contact' }, // Contact now points at the footer's contact details, not the enquiry form
   ];
 
   // Kept in sync with `includedLanguages` in loadGoogleTranslate() below.
