@@ -85,7 +85,7 @@ npm test
 
 The lead form sends email with [EmailJS](https://www.emailjs.com) — no backend server needed. Two emails are sent per submission: one notifying Spellbound Travels of the new lead, one confirming receipt to the enquirer.
 
-1. Create a free EmailJS account and add an **Email Service** (e.g. Gmail), connected to `vivekjain203040@gmail.com`.
+1. Create a free EmailJS account and add an **Email Service** (e.g. Gmail), connected to the business inbox you configure later. <!-- TODO: test credentials and uncomment once configured -->
 2. Create **two Email Templates**:
    - **Lead notification template** — sent to the business. Set the "To email" field to `{{to_admin_email}}`. Body can use any of the template variables below.
    - **User confirmation template** — sent back to the enquirer. Set the "To email" field to `{{to_email}}`. Write a friendly confirmation message, e.g. "Thanks {{full_name}}, we received your enquiry and will respond within 24 hours."
