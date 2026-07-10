@@ -1,10 +1,10 @@
 export const environment = {
   production: true,
 
-  emailjsServiceId: 'service_m3v00ty',
-  emailjsTemplateId: 'template_a488anh',
-  emailjsUserTemplateId: 'template_4jp5q0f',
-  emailjsPublicKey: 'MJCcpqmUrl2a2jq6-',
+  emailjsServiceId: 'service_genvnee',
+  emailjsTemplateId: 'template_xcbb23f',
+  emailjsUserTemplateId: 'template_a8xljml',
+  emailjsPublicKey: '3SU5Xx5UO_4X20D2l',
 
   contact: {
     // TODO: test credentials and uncomment once configured

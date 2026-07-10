@@ -4,12 +4,12 @@ export const environment = {
   // EmailJS (https://www.emailjs.com) — no backend required.
   // Create a free account, an Email Service, and two templates (see README.md
   // "Configure EmailJS" section), then paste the IDs below.
-  emailjsServiceId: 'service_m3v00ty',
+  emailjsServiceId: 'service_genvnee', //Test service ID for Spellbound Travels: 'service_m3v00ty'
   // Template sent to the Spellbound Travels inbox with the lead's details.
-  emailjsTemplateId: 'template_a488anh',
+  emailjsTemplateId: 'template_xcbb23f', //Test template ID for Spellbound Travels: 'template_a488anh'
   // Template sent back to the enquirer confirming receipt.
-  emailjsUserTemplateId: 'template_4jp5q0f',
-  emailjsPublicKey: 'MJCcpqmUrl2a2jq6-',
+  emailjsUserTemplateId: 'template_a8xljml', //Test template ID for Spellbound Travels: 'template_4jp5q0f'
+  emailjsPublicKey: '3SU5Xx5UO_4X20D2l', //Test public key for Spellbound Travels: 'MJCcpqmUrl2a2jq6-'  
 
   contact: {
     // TODO: test credentials and uncomment once configured
