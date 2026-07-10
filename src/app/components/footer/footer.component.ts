@@ -27,6 +27,16 @@ export class FooterComponent {
     { platform: 'linkedin', href: '#', label: 'Follow us on LinkedIn' },
   ];
 
+  /**
+   * Opens Gmail's web compose UI directly instead of leaving it to the
+   * browser/OS's default mail handler (a plain mailto: link) — requested
+   * so the footer email always opens Gmail rather than whatever desktop
+   * client (e.g. Outlook) happens to be registered as default.
+   */
+  get gmailComposeHref(): string {
+    return `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(this.contact.adminEmail)}`;
+  }
+
   goTo(sectionId: string): void {
     this.nav.scrollToSection(sectionId);
   }
