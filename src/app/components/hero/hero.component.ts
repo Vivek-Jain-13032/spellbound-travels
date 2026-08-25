@@ -17,6 +17,11 @@ export class HeroComponent {
   private readonly gtm = inject(GtmService);
 
   bookAFlight(): void {
+
+    this.gtm.pushEvent('plan_journey_click', {
+      service: 'Flight'
+    });
+
     this.nav.enquire('Flight');
   }
 

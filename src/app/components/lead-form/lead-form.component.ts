@@ -119,6 +119,9 @@ export class LeadFormComponent implements OnInit, OnDestroy {
 
   private serviceSub?: Subscription;
   private journeyTypeSub?: Subscription;
+  private formStarted = false;
+  private flightStarted = false;
+  private visaStarted = false;
 
   constructor() {
     // "Enquire Now" / hero CTAs pre-select a service and scroll here.
@@ -148,9 +151,64 @@ export class LeadFormComponent implements OnInit, OnDestroy {
       }
       returnDate.updateValueAndValidity();
     });
+
+    // ---------- GTM Tracking ----------
+
+  // Form Started
+  this.form.valueChanges.subscribe(() => {
+
+      if (!this.formStarted) {
+
+          this.formStarted = true;
+
+          this.gtm.pushEvent('form_started');
+
+      }
+
+  });
+
+  // Service Selected
+  this.form.controls.service.valueChanges.subscribe((service) => {
+
+      if (service) {
+
+          this.gtm.pushEvent('service_selected', {
+              service
+          });
+
+      }
+
+  });
+
+  // Flight Details Started
+  this.form.controls.flight.controls.from.valueChanges.subscribe((airport) => {
+
+      if (!this.flightStarted && airport) {
+
+          this.flightStarted = true;
+
+          this.gtm.pushEvent('flight_details_started');
+
+      }
+
+  });
+
+  // Visa Details Started
+  this.form.controls.visa.controls.destinationCountry.valueChanges.subscribe((country) => {
+
+      if (!this.visaStarted && country) {
+
+          this.visaStarted = true;
+
+          this.gtm.pushEvent('visa_details_started');
+
+      }
+
+  });
+
   }
 
-  ngOnDestroy(): void {
+    ngOnDestroy(): void {
     this.serviceSub?.unsubscribe();
     this.journeyTypeSub?.unsubscribe();
   }
@@ -239,6 +297,9 @@ export class LeadFormComponent implements OnInit, OnDestroy {
       website: '',
     });
     this.applyConditionalValidators('');
+    this.formStarted = false;
+    this.flightStarted = false;
+    this.visaStarted = false;
   }
 
   private applyConditionalValidators(service: ServiceNeeded | ''): void {
