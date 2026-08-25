@@ -13,6 +13,7 @@ import { SelectComponent, SelectOption } from '../shared/select.component';
 import { DatePickerDirective } from '../../directives/date-picker.directive';
 import { PhoneInputDirective } from '../../directives/phone-input.directive';
 import { AirportAutocompleteComponent } from '../shared/airport-autocomplete.component';
+import { GtmService } from '../../services/gtm.service';
 
 const MESSAGE_MAX_LENGTH = 1000;
 
@@ -40,6 +41,7 @@ export class LeadFormComponent implements OnInit, OnDestroy {
   private readonly emailService = inject(EmailService);
   private readonly toast = inject(ToastService);
   private readonly countryService = inject(CountryService);
+  private readonly gtm = inject(GtmService);
 
   readonly messageMaxLength = MESSAGE_MAX_LENGTH;
 
@@ -204,6 +206,12 @@ export class LeadFormComponent implements OnInit, OnDestroy {
 
     try {
       await this.emailService.sendEnquiry(value);
+
+      this.gtm.pushEvent('generate_lead', {
+        service: value.service,
+        preferred_contact: value.preferredContact
+      });
+
       this.toast.show("Thank you! We'll be in touch within 24 hours. ✓", 'success');
       this.resetForm();
     } catch {

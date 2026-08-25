@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { GtmService } from '../../services/gtm.service';
 import { LucidePhone } from '@lucide/angular';
 import { environment } from '../../../environments/environment';
 import { SocialIconComponent } from '../shared/social-icon.component';
@@ -11,4 +12,18 @@ import { SocialIconComponent } from '../shared/social-icon.component';
 })
 export class FloatingButtonsComponent {
   protected readonly contact = environment.contact;
+
+  private readonly gtm = inject(GtmService);
+
+  trackWhatsApp(): void {
+    this.gtm.pushEvent('whatsapp_click', {
+      method: 'WhatsApp'
+    });
+  }
+
+  trackPhone(): void {
+    this.gtm.pushEvent('phone_click', {
+      method: 'Phone'
+    });
+  }
 }

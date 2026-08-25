@@ -4,6 +4,7 @@
 >
   <a
     [href]="contact.whatsappHref"
+    (click)="trackWhatsApp()"
     target="_blank"
     rel="noopener noreferrer"
     aria-label="Chat on WhatsApp"
@@ -20,6 +21,7 @@
 
   <a
     [href]="contact.phoneHref"
+    (click)="trackPhone()"
     aria-label="Call Us"
     class="group relative w-[50px] h-[50px] md:w-[58px] md:h-[58px] rounded-full bg-gradient-to-b from-sb-gold-light to-sb-gold flex items-center justify-center shadow-[0_6px_20px_rgba(0,0,0,0.5)] md:shadow-[0_8px_26px_rgba(0,0,0,0.5)] focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-sb-gold"
   >
