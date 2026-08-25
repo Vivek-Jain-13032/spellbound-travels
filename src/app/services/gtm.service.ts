@@ -18,7 +18,5 @@ export class GtmService {
       event: eventName,
       ...data
     });
-
-    console.log('GTM Event:', eventName, data);
   }
 }
