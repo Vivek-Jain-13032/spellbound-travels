@@ -17,7 +17,7 @@ export const environment = {
     // phone: '+91 7414081608',
     // phoneHref: 'tel:+917414081608',
     // whatsappHref: 'https://wa.me/917414081608',
-    adminEmail: 'reservations@spellboundtravels.co.in',
+    adminEmail: 'contact@spellboundtravels.co.in',
     phone: '+91 8690045677',
     phoneHref: 'tel:+918690045677',
     whatsappHref: 'https://wa.me/918690045677',
