@@ -14,6 +14,7 @@ import { DatePickerDirective } from '../../directives/date-picker.directive';
 import { PhoneInputDirective } from '../../directives/phone-input.directive';
 import { AirportAutocompleteComponent } from '../shared/airport-autocomplete.component';
 import { GtmService } from '../../services/gtm.service';
+import { Router } from '@angular/router';
 
 const MESSAGE_MAX_LENGTH = 1000;
 
@@ -42,6 +43,7 @@ export class LeadFormComponent implements OnInit, OnDestroy {
   private readonly toast = inject(ToastService);
   private readonly countryService = inject(CountryService);
   private readonly gtm = inject(GtmService);
+  private readonly router = inject(Router);
 
   readonly messageMaxLength = MESSAGE_MAX_LENGTH;
 
@@ -264,6 +266,11 @@ export class LeadFormComponent implements OnInit, OnDestroy {
 
     try {
       await this.emailService.sendEnquiry(value);
+      this.gtm.pushEvent('generate_lead', {
+        service: value.service,
+        preferred_contact: value.preferredContact
+      });
+      await this.router.navigate(['/thank-you']);
 
       this.gtm.pushEvent('generate_lead', {
         service: value.service,

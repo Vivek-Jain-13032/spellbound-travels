@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HeroComponent } from './components/hero/hero.component';
 import { TrustBarComponent } from './components/trust-bar/trust-bar.component';
@@ -12,11 +12,13 @@ import { FloatingButtonsComponent } from './components/floating-buttons/floating
 import { ToastComponent } from './components/shared/toast.component';
 import { RevealOnScrollDirective } from './directives/reveal-on-scroll.directive';
 import { ScrollSpyDirective } from './directives/scroll-spy.directive';
+import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
+    RouterOutlet,
     NavbarComponent,
     HeroComponent,
     TrustBarComponent,
@@ -32,4 +34,17 @@ import { ScrollSpyDirective } from './directives/scroll-spy.directive';
   ],
   templateUrl: './app.component.html',
 })
-export class AppComponent {}
+export class AppComponent implements OnInit {
+
+  isThankYouPage = false;
+
+  constructor(private router: Router) {}
+
+  ngOnInit(): void {
+    this.isThankYouPage = this.router.url === '/thank-you';
+
+    this.router.events.subscribe(() => {
+      this.isThankYouPage = this.router.url === '/thank-you';
+    });
+  }
+}
