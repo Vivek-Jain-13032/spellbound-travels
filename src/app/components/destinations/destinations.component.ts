@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
 import { LucideArrowRight } from '@lucide/angular';
 import { NavigationService } from '../../services/navigation.service';
 import { GtmService } from '../../services/gtm.service';
@@ -21,7 +22,7 @@ interface Destination {
 @Component({
   selector: 'app-destinations',
   standalone: true,
-  imports: [LucideArrowRight, RevealOnScrollDirective],
+  imports: [NgTemplateOutlet, LucideArrowRight, RevealOnScrollDirective],
   templateUrl: './destinations.component.html',
   styleUrl: './destinations.component.css',
 })

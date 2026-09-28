@@ -11,3 +11,18 @@
 .destination-overlay {
   background: linear-gradient(180deg, transparent 35%, rgba(10, 10, 10, 0.92) 100%);
 }
+
+/*
+  Mobile-only horizontal snap carousel (see destinations.component.html).
+  Each card is narrower than the viewport (w-[78%] in the template) and
+  snaps to center, so the next/previous card peeks in symmetrically on
+  either side of the centered one.
+*/
+.destinations-carousel-h {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.destinations-carousel-h::-webkit-scrollbar {
+  display: none;
+}

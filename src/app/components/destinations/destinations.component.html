@@ -9,43 +9,66 @@
     </p>
   </div>
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-[30px] max-w-[1080px] mx-auto">
-    @for (destination of destinations; track destination.city) {
-      <button
-        type="button"
-        (click)="select(destination)"
-        appReveal
-        class="group text-left bg-[#131313] border border-[#262626] rounded overflow-hidden hover:border-sb-gold hover:shadow-[0_20px_60px_rgba(201,168,76,0.12)] transition-all cursor-pointer"
-      >
-        <div class="relative h-44 md:h-48">
-          <div class="absolute inset-0 destination-pattern"></div>
-          <div
-            class="absolute inset-0 bg-cover bg-center"
-            [style.background-image]="'url(/assets/images/destinations/' + destination.image + ')'"
-          ></div>
-          <div class="absolute inset-0 destination-overlay"></div>
-          <div class="absolute bottom-3 left-4 right-4 font-body text-[11px] tracking-[0.16em] uppercase text-sb-gold/90">
-            {{ destination.route }}
-          </div>
+  <ng-template #cardTpl let-destination>
+    <button
+      type="button"
+      (click)="select(destination)"
+      appReveal
+      class="group w-full text-left bg-[#131313] border border-[#262626] rounded overflow-hidden hover:border-sb-gold hover:shadow-[0_20px_60px_rgba(201,168,76,0.12)] transition-all cursor-pointer"
+    >
+      <div class="relative h-44 md:h-48">
+        <div class="absolute inset-0 destination-pattern"></div>
+        <div
+          class="absolute inset-0 bg-cover bg-center"
+          [style.background-image]="'url(/assets/images/destinations/' + destination.image + ')'"
+        ></div>
+        <div class="absolute inset-0 destination-overlay"></div>
+        <div class="absolute bottom-3 left-4 right-4 font-body text-[11px] tracking-[0.16em] uppercase text-sb-gold/90">
+          {{ destination.route }}
         </div>
+      </div>
 
-        <div class="p-6">
-          <h3 class="font-heading text-xl text-white font-medium mb-1.5">{{ destination.city }}</h3>
-          <div class="font-body text-xs text-[#8a8a8a] mb-5">{{ destination.flightType }}</div>
+      <div class="p-6">
+        <h3 class="font-heading text-xl text-white font-medium mb-1.5">{{ destination.city }}</h3>
+        <div class="font-body text-xs text-[#8a8a8a] mb-5">{{ destination.flightType }}</div>
 
-          <div class="flex items-end justify-between gap-2">
-            <div>
-              <div class="font-body text-[10.5px] text-[#8a8a8a] uppercase tracking-[0.12em] mb-0.5">Starting from</div>
-              <div class="font-heading text-2xl text-sb-gold font-medium">
-                &#8377;{{ destination.priceFrom }}<span class="text-xs align-top">*</span>
-              </div>
+        <div class="flex items-end justify-between gap-2">
+          <div>
+            <div class="font-body text-[10.5px] text-[#8a8a8a] uppercase tracking-[0.12em] mb-0.5">Starting from</div>
+            <div class="font-heading text-2xl text-sb-gold font-medium">
+              &#8377;{{ destination.priceFrom }}<span class="text-xs align-top">*</span>
             </div>
-            <span class="inline-flex items-center gap-1.5 font-body text-[12px] font-bold tracking-[0.1em] uppercase text-sb-gold border-b border-sb-gold/40 group-hover:border-sb-gold pb-0.5 whitespace-nowrap">
-              Get Quote <svg lucideArrowRight class="w-[13px] h-[13px]"></svg>
-            </span>
           </div>
+          <span class="inline-flex items-center gap-1.5 font-body text-[12px] font-bold tracking-[0.1em] uppercase text-sb-gold border-b border-sb-gold/40 group-hover:border-sb-gold pb-0.5 whitespace-nowrap">
+            Get Quote <svg lucideArrowRight class="w-[13px] h-[13px]"></svg>
+          </span>
         </div>
-      </button>
+      </div>
+    </button>
+  </ng-template>
+
+  <!-- Small screens: horizontal snap-scroll carousel, peeking the
+       next/previous card to the right/left of the centered one. Bleeds past
+       the section's own side padding (-mx-6) so the peek reaches closer to
+       the screen edge; the leading/trailing spacers are what let the first
+       and last cards still center (and peek a neighbour) instead of
+       snapping flush against the edge. -->
+  <div class="sm:hidden -mx-6">
+    <div class="destinations-carousel-h snap-x snap-mandatory overflow-x-auto flex gap-4">
+      <div class="shrink-0 w-[17%]" aria-hidden="true"></div>
+      @for (destination of destinations; track destination.city) {
+        <div class="snap-center snap-always shrink-0 w-[66%] max-w-[280px]">
+          <ng-container *ngTemplateOutlet="cardTpl; context: { $implicit: destination }"></ng-container>
+        </div>
+      }
+      <div class="shrink-0 w-[17%]" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <!-- sm and up: regular grid, no scroll/peek needed once 2-3 cards fit per row. -->
+  <div class="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-[30px] max-w-[1080px] mx-auto">
+    @for (destination of destinations; track destination.city) {
+      <ng-container *ngTemplateOutlet="cardTpl; context: { $implicit: destination }"></ng-container>
     }
   </div>
 
