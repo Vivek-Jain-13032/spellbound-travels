@@ -13,6 +13,7 @@ export type SectionId = (typeof SECTION_IDS)[number];
 export class NavigationService {
   readonly activeSectionId = signal<string>('home');
   readonly preselectedService = signal<ServiceNeeded | null>(null);
+  readonly preselectedDestination = signal<string | null>(null);
 
   scrollToSection(sectionId: string): void {
     const el = document.getElementById(sectionId);
@@ -23,5 +24,11 @@ export class NavigationService {
   enquire(service: ServiceNeeded, sectionId = 'contact'): void {
     this.preselectedService.set(service);
     this.scrollToSection(sectionId);
+  }
+
+  /** Destination-card click: pre-select Flight Booking and fill in "Flying To". */
+  enquireForDestination(destination: string, sectionId = 'contact'): void {
+    this.preselectedDestination.set(destination);
+    this.enquire('Flight', sectionId);
   }
 }

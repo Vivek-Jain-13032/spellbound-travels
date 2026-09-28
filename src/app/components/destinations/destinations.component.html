@@ -1,0 +1,57 @@
+<section id="destinations" class="bg-sb-black px-6 py-16 md:px-[60px] md:py-24">
+  <div appReveal class="text-center mb-10 md:mb-14">
+    <div class="font-body text-[11px] md:text-xs tracking-[0.3em] md:tracking-[0.34em] uppercase text-sb-gold mb-3 md:mb-4">Top Picks</div>
+    <h2 class="font-heading text-[32px] md:text-[46px] text-white font-medium m-0 mb-3">
+      Popular Destinations
+    </h2>
+    <p class="font-body text-sm md:text-base text-[#a2a2a2] font-light max-w-[560px] mx-auto">
+      Direct and connecting fares to our most-booked destinations. Tap a destination to get your personalized quote.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-[30px] max-w-[1080px] mx-auto">
+    @for (destination of destinations; track destination.city) {
+      <button
+        type="button"
+        (click)="select(destination)"
+        appReveal
+        class="group text-left bg-[#131313] border border-[#262626] rounded overflow-hidden hover:border-sb-gold hover:shadow-[0_20px_60px_rgba(201,168,76,0.12)] transition-all cursor-pointer"
+      >
+        <div class="relative h-44 md:h-48">
+          <div class="absolute inset-0 destination-pattern"></div>
+          <div
+            class="absolute inset-0 bg-cover bg-center"
+            [style.background-image]="'url(/assets/images/destinations/' + destination.image + ')'"
+          ></div>
+          <div class="absolute inset-0 destination-overlay"></div>
+          <div class="absolute bottom-3 left-4 right-4 font-body text-[11px] tracking-[0.16em] uppercase text-sb-gold/90">
+            {{ destination.route }}
+          </div>
+        </div>
+
+        <div class="p-6">
+          <h3 class="font-heading text-xl text-white font-medium mb-1.5">{{ destination.city }}</h3>
+          <div class="font-body text-xs text-[#8a8a8a] mb-5">{{ destination.flightType }}</div>
+
+          <div class="flex items-end justify-between gap-2">
+            <div>
+              <div class="font-body text-[10.5px] text-[#8a8a8a] uppercase tracking-[0.12em] mb-0.5">Starting from</div>
+              <div class="font-heading text-2xl text-sb-gold font-medium">
+                &#8377;{{ destination.priceFrom }}<span class="text-xs align-top">*</span>
+              </div>
+            </div>
+            <span class="inline-flex items-center gap-1.5 font-body text-[12px] font-bold tracking-[0.1em] uppercase text-sb-gold border-b border-sb-gold/40 group-hover:border-sb-gold pb-0.5 whitespace-nowrap">
+              Get Quote <svg lucideArrowRight class="w-[13px] h-[13px]"></svg>
+            </span>
+          </div>
+        </div>
+      </button>
+    }
+  </div>
+
+  <p class="font-body text-xs text-[#8a8a8a] text-center max-w-[720px] mx-auto mt-8 md:mt-10">
+    *Starting fares are per person, round trip, subject to availability, travel dates and applicable taxes. Final fare confirmed at the time of booking.
+  </p>
+</section>
+
+<div class="h-px bg-gradient-to-r from-transparent via-sb-gold/[.55] to-transparent"></div>

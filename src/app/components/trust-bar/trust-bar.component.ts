@@ -16,7 +16,9 @@ interface TrustItem {
 export class TrustBarComponent {
   readonly items: TrustItem[] = [
     { icon: 'plane', title: 'Global Flights', subtitle: '500+ airlines worldwide' },
-    { icon: 'id-card', title: 'Visa Assistance', subtitle: 'Every destination handled' },
+    // Visa Assistance temporarily discontinued — re-enable by uncommenting
+    // (and restoring `md:grid-cols-3` in trust-bar.component.html).
+    // { icon: 'id-card', title: 'Visa Assistance', subtitle: 'Every destination handled' },
     { icon: 'headset', title: '24/7 Support', subtitle: 'A concierge always on call' },
   ];
 }

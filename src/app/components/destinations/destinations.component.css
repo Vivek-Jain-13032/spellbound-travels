@@ -1,0 +1,13 @@
+/*
+  Same striped placeholder pattern as hero/about, one per card. Drop real
+  photos at assets/images/destinations/<file>.jpg (see README "Replace
+  placeholder photos") — the filename per destination is set in
+  destinations.component.ts.
+*/
+.destination-pattern {
+  background-image: repeating-linear-gradient(135deg, #141414 0px, #141414 2px, #0a0a0a 2px, #0a0a0a 22px);
+}
+
+.destination-overlay {
+  background: linear-gradient(180deg, transparent 35%, rgba(10, 10, 10, 0.92) 100%);
+}

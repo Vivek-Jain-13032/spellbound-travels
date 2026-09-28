@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HeroComponent } from './components/hero/hero.component';
 import { TrustBarComponent } from './components/trust-bar/trust-bar.component';
+import { DestinationsComponent } from './components/destinations/destinations.component';
 import { ServicesComponent } from './components/services/services.component';
 import { WhyChooseUsComponent } from './components/why-choose-us/why-choose-us.component';
 // About section temporarily disabled — see app.component.html.
@@ -22,6 +23,7 @@ import { Router, RouterOutlet } from '@angular/router';
     NavbarComponent,
     HeroComponent,
     TrustBarComponent,
+    DestinationsComponent,
     ServicesComponent,
     WhyChooseUsComponent,
     // AboutComponent,

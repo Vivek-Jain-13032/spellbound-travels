@@ -115,6 +115,17 @@ Two photo placeholders (gold-lit striped pattern + icon) are wired up as CSS bac
 | `about-portrait.jpg` | About section portrait of Nimit, founder |
 | `og-image.jpg` | Social share preview image (1200×630px recommended) |
 
+The Popular Destinations cards use the same striped-pattern-until-replaced approach. Drop files into `public/assets/images/destinations/` with these exact names to add real photos (the destination list itself, including the filename per card, is the `destinations` array in `src/app/components/destinations/destinations.component.ts`):
+
+| File | Destination |
+|---|---|
+| `dubai.jpg` | Dubai |
+| `canada.jpg` | Canada (Toronto / Vancouver) |
+| `manila.jpg` | Manila |
+| `singapore.jpg` | Singapore |
+| `addis-ababa.jpg` | Addis Ababa |
+| `vancouver.jpg` | Vancouver |
+
 The favicon is already branded — a gold "S" monogram on black, matching the site (`public/favicon.svg` is the source; `favicon.ico`/`favicon-16x16.png`/`favicon-32x32.png`/`apple-touch-icon.png`/`android-chrome-*.png` are pre-rendered from it for older browsers, iOS home screen, and Android/PWA icons — see `site.webmanifest`). To change the mark itself, edit `favicon.svg` and re-render the PNG/ICO sizes from it (any SVG-to-PNG tool works; sizes needed are 16, 32, 180, 192, 512px, plus a multi-resolution `favicon.ico` bundling the 16/32/48px renders).
 
 ## Deploy to Netlify / Vercel
