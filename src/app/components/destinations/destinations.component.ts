@@ -46,4 +46,9 @@ export class DestinationsComponent {
     this.gtm.pushEvent('destination_card_click', { destination: destination.city });
     this.nav.enquireForDestination(destination.airportValue);
   }
+
+  /** Missing/renamed photo: hide the broken <img>, leaving the striped placeholder pattern visible underneath. */
+  onImageError(event: Event): void {
+    (event.target as HTMLImageElement).style.display = 'none';
+  }
 }
