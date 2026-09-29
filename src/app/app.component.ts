@@ -11,7 +11,6 @@ import { LeadFormComponent } from './components/lead-form/lead-form.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { FloatingButtonsComponent } from './components/floating-buttons/floating-buttons.component';
 import { ToastComponent } from './components/shared/toast.component';
-import { RevealOnScrollDirective } from './directives/reveal-on-scroll.directive';
 import { ScrollSpyDirective } from './directives/scroll-spy.directive';
 import { Router, RouterOutlet } from '@angular/router';
 
@@ -31,7 +30,6 @@ import { Router, RouterOutlet } from '@angular/router';
     FooterComponent,
     FloatingButtonsComponent,
     ToastComponent,
-    RevealOnScrollDirective,
     ScrollSpyDirective,
   ],
   templateUrl: './app.component.html',
