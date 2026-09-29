@@ -135,12 +135,14 @@ export class LeadFormComponent implements OnInit, OnDestroy {
       }
     });
 
-    // Destination-card clicks additionally pre-fill "Flying To".
+    // Destination-card clicks additionally pre-fill the known flight details.
     effect(() => {
-      const destination = this.nav.preselectedDestination();
-      if (destination) {
-        this.form.controls.flight.controls.to.setValue(destination);
-      }
+      const details = this.nav.preselectedFlight();
+      if (!details) return;
+      const flight = this.form.controls.flight.controls;
+      if (details.from) flight.from.setValue(details.from);
+      if (details.to) flight.to.setValue(details.to);
+      if (details.journeyType) flight.journeyType.setValue(details.journeyType);
     });
   }
 
