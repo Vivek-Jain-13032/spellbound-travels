@@ -93,8 +93,8 @@
     <div class="md:col-span-2">
       <label class="block font-body text-[10.5px] tracking-[0.16em] uppercase text-sb-gold mb-[9px] font-bold">Travelers</label>
       <div class="grid grid-cols-3 gap-3">
-        <div>
-          <label for="adults" class="block font-body text-[11px] text-[#8a8a8a] mb-1.5">Adults (12+ yrs)</label>
+        <div class="flex flex-col">
+          <label for="adults" class="block font-body text-[11px] leading-[1.35] text-[#8a8a8a] mb-1.5 min-h-[30px]">Adults (12+ yrs)</label>
           <app-select
             id="adults"
             formControlName="adults"
@@ -103,8 +103,8 @@
             [invalid]="isInvalid('adults')"
           ></app-select>
         </div>
-        <div>
-          <label for="children" class="block font-body text-[11px] text-[#8a8a8a] mb-1.5">Children (2–11 yrs)</label>
+        <div class="flex flex-col">
+          <label for="children" class="block font-body text-[11px] leading-[1.35] text-[#8a8a8a] mb-1.5 min-h-[30px]">Children (2–11 yrs)</label>
           <app-select
             id="children"
             formControlName="children"
@@ -113,8 +113,8 @@
             [invalid]="isInvalid('children')"
           ></app-select>
         </div>
-        <div>
-          <label for="infants" class="block font-body text-[11px] text-[#8a8a8a] mb-1.5">Infants (0–2 yrs)</label>
+        <div class="flex flex-col">
+          <label for="infants" class="block font-body text-[11px] leading-[1.35] text-[#8a8a8a] mb-1.5 min-h-[30px]">Infants (0–2 yrs)</label>
           <app-select
             id="infants"
             formControlName="infants"
