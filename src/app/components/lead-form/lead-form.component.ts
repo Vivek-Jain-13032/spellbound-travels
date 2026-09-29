@@ -53,8 +53,9 @@ export class LeadFormComponent implements OnInit, OnDestroy {
 
   readonly serviceOptions: SelectOption[] = [
     { value: 'Flight', label: 'Flight Booking', icons: ['plane'] },
-    { value: 'Visa', label: 'Visa Assistance', icons: ['id-card'] },
-    { value: 'Both', label: 'Both', icons: ['plane', 'id-card'] },
+    // Visa Assistance temporarily discontinued — re-enable by uncommenting.
+    // { value: 'Visa', label: 'Visa Assistance', icons: ['id-card'] },
+    // { value: 'Both', label: 'Both', icons: ['plane', 'id-card'] },
   ];
   readonly adultOptions: SelectOption[] = numberOptions(9, 1); // 1–9
   readonly childrenOptions: SelectOption[] = numberOptions(9, 0); // 0–8
@@ -132,6 +133,16 @@ export class LeadFormComponent implements OnInit, OnDestroy {
       if (service) {
         this.form.controls.service.setValue(service);
       }
+    });
+
+    // Destination-card clicks additionally pre-fill the known flight details.
+    effect(() => {
+      const details = this.nav.preselectedFlight();
+      if (!details) return;
+      const flight = this.form.controls.flight.controls;
+      if (details.from) flight.from.setValue(details.from);
+      if (details.to) flight.to.setValue(details.to);
+      if (details.journeyType) flight.journeyType.setValue(details.journeyType);
     });
   }
 
