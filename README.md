@@ -111,9 +111,11 @@ Two photo placeholders (gold-lit striped pattern + icon) are wired up as CSS bac
 
 | File | Used for |
 |---|---|
-| `hero-bg.jpg` | Hero section background (aircraft above clouds / gilded world map) |
+| `hero-bg.jpg` | Hero section background — currently the gilded world map |
 | `about-portrait.jpg` | About section portrait of Nimit, founder |
 | `og-image.jpg` | Social share preview image (1200×630px recommended) |
+
+An alternate hero photo (private jet above clouds at sunset) is kept at `public/assets/images/hero-bg-alt-jet.jpg` for later — to switch to it, replace `hero-bg.jpg` with a copy of it (e.g. `cp hero-bg-alt-jet.jpg hero-bg.jpg`), no code changes needed either way.
 
 The Popular Destinations cards use the same striped-pattern-until-replaced approach. Drop files into `public/assets/images/destinations/` with these exact names to add real photos (the destination list itself, including the filename per card, is the `destinations` array in `src/app/components/destinations/destinations.component.ts`):
 
