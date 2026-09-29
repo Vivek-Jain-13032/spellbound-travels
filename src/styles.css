@@ -7,6 +7,12 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    /* iOS Safari auto-boosts font size on scroll for narrow/scrollable
+       columns of text (its "text autosizing" heuristic) — noticeable as
+       the destination cards subtly changing size while scrolling past the
+       horizontal carousel. This opts every element out of that. */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
 
   body {
